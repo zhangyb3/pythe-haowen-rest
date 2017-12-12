@@ -40,9 +40,6 @@ public class UserController {
 	public PytheResult register(@RequestBody String url) throws Exception {
 
 		try {
-
-			url = URLDecoder.decode(url, "UTF-8");
-			System.out.println("===========================>"+url);
 			return service.register(url);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,7 +96,6 @@ public class UserController {
 	public PytheResult decodeUserInfo(
 			@RequestBody String parameters) {
 		try {
-			parameters = URLDecoder.decode(parameters, "UTF-8");
 			JSONObject json = JSONObject.parseObject(parameters);
 			String encryptedData = json.getString("encryptedData");
 			String iv = json.getString("iv");

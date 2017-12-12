@@ -76,13 +76,13 @@ public class FactoryUtils {
             }
         }
         sb.append("key="+WX_KEY);
-        System.out.println("============================>sb : " + sb);
+//        System.out.println("============================>sb : " + sb);
 //        if (WX_KEY!=null) {
 //        	
 //		}
       
         sign = FactoryUtils.MD5(sb.toString()).toUpperCase();
-        System.out.println("===========================>sign : " + sign);
+//        System.out.println("===========================>sign : " + sign);
         return sign;
     }
     

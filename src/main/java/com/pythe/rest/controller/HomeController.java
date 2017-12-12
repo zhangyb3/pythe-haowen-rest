@@ -41,6 +41,8 @@ public class HomeController {
 			return subjectService.selectSubjectByPhase(gradeId);
 		}
     
+    	
+    	
 	/**
 	 * 首页科目筛选列表
 	 * @param gradeId 年级ID
@@ -58,7 +60,6 @@ public class HomeController {
 				@RequestParam(defaultValue="1") Integer pageNum,
 				@RequestParam(defaultValue="10") Integer pageSize) throws Exception{
     	try {
-    
 			return PytheResult.ok(service.selectListByGradeIdAndSubject(gradeId,subjectId,pageNum,pageSize));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -33,9 +33,6 @@ public class QuestionController {
 	@ResponseBody
 	public PytheResult insertQuestion(@RequestBody String url) throws Exception {
 		// 调用login方法来验证是否是注册用户
-// URLDecoder.decode(url, "UTF-8")
-		url = URLDecoder.decode(url, "UTF-8");
-		System.out.println(url);
 		try {
 			return PytheResult.ok(service.insertQuestion(url));
 		} catch (Exception e) {

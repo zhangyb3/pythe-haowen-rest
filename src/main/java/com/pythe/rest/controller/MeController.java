@@ -48,25 +48,7 @@ public class MeController {
 			return PytheResult.build(500, ExceptionUtil.getStackTrace(e));
 		}
 	}
-    
-    
-//	  /**
-//     * 我问列表
-//     * @param studentId
-//     * @return 根据studentId返回所有问题
-//     */
-//    @RequestMapping(value = "/me/question", method = RequestMethod.GET)
-//	@ResponseBody
-//	public PytheResult  selectQuestionListByStudentId(@RequestParam("studentId")Long studentId,
-//			@RequestParam(defaultValue="1") Integer pageNum,
-//			@RequestParam(defaultValue="10") Integer pageSize){
-//    	try {
-//			return PytheResult.ok(questionService.selectQuestionListByStudentId(studentId,pageNum,pageSize));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return PytheResult.build(500, ExceptionUtil.getStackTrace(e));
-//		}
-//	}
+   
     
     /**
      * 点击答案，有问题和答案的显示
@@ -120,7 +102,6 @@ public class MeController {
 		}
 	}
     
-    
     /**
      * 我问：举报
      * @param userId complainedId
@@ -158,13 +139,6 @@ public class MeController {
 	}
     
     
-    
-    
-    
-
-    
-    
-	
 	  /**
      * 编辑用户信息
      * @param username
@@ -202,13 +176,5 @@ public class MeController {
   		}
   	}
     
-  	
-  	
-
-    
-
-    
-	
-	
 
 }

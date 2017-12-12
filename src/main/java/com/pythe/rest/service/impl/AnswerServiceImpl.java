@@ -33,6 +33,7 @@ import com.pythe.pojo.VQuestion;
 import com.pythe.pojo.VQuestionAnswersExample;
 import com.pythe.pojo.VQuestionExample;
 import com.pythe.rest.service.AnswerService;
+import com.vdurmont.emoji.EmojiParser;
 import com.pythe.rest.dao.JedisClient;
 
 
@@ -224,7 +225,8 @@ public class AnswerServiceImpl implements AnswerService{
 		answer.setKnowledgeid(knowledgeId);
 		answer.setStudentid(studentId);
 		answer.setTeacherid(teacherId);
-		answer.setAnswercontent(answerContent);
+		
+		answer.setAnswercontent(EmojiParser.parseToUnicode(answerContent));
 		answer.setAnswertime(new Date());
 		answer.setFee(0d);
 		answer.setLikesnum(0l);
@@ -255,9 +257,7 @@ public class AnswerServiceImpl implements AnswerService{
 		billExample.createCriteria()
 		.andObjectidEqualTo(questionId)
 		.andStudentOutidEqualTo(studentId)
-		.andTeacherInidEqualTo(teacherId)
-		//.andOperationtypeEqualTo("ask_question")
-		;
+		.andTeacherInidEqualTo(teacherId);
 		
 		List<TblBill> bills = billMapper.selectByExample(billExample);
 		if(!bills.isEmpty())

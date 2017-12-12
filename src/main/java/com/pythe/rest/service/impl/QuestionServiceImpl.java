@@ -30,6 +30,7 @@ import com.pythe.pojo.VTeacherExample;
 import com.pythe.pojo.VTeacherWithBLOBs;
 import com.pythe.rest.service.QuestionService;
 import com.vdurmont.emoji.EmojiParser;
+import com.vdurmont.emoji.EmojiParser.FitzpatrickAction;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -88,7 +89,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 		// 给是否已经答，设置一下IS_ANSWER_INIT
 		question.setAnswered(IS_ANSWER_INIT);
-		question.setQuestioncontent(questionContent.toJSONString());
+		question.setQuestioncontent(EmojiParser.parseToAliases(questionContent.toJSONString(), FitzpatrickAction.PARSE));
 		question.setReward(reward);
 		question.setStarttime(new Date());
 		question.setSubjectid(subjectId);

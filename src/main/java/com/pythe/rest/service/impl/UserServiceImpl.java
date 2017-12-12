@@ -222,13 +222,13 @@ public class UserServiceImpl implements UserService {
 			newUser.setSolved(TEACHER_SOLVED_INIT);
 		}
 		newUser.setStatus(status);
-		newUser.setUsername(username);
+		
+		newUser.setUsername(EmojiParser.parseToAliases(username, FitzpatrickAction.PARSE));
 		newUser.setUserimg(userimg);
 		newUser.setPhonenum(phonenum);
 		newUser.setCreated(new Date());
 		newUser.setUpdated(new Date());
 		newUser.setOpenid(openId);
-		newUser.setDescription("个人情况描述");
 		newUser.setStatus(status);
 		newUser.setCollection(USER_COLLECTION_INIT);
 		newUser.setComplaintlist(USER_COMPLAINTLIST_INIT);
@@ -291,7 +291,6 @@ public class UserServiceImpl implements UserService {
 		updateUser.setUsername(EmojiParser.parseToAliases(username, FitzpatrickAction.PARSE));
 	
 		updateUser.setDescription(EmojiParser.parseToAliases(description, FitzpatrickAction.PARSE));
-		System.out.println("=============================USER DESCRIPTION : " + EmojiParser.parseToAliases(description, FitzpatrickAction.PARSE));
 		TblUserExample example = new TblUserExample();
 		example.createCriteria().andUseridEqualTo(userId);
 		userMapper.updateByExampleSelective(updateUser, example);
@@ -369,7 +368,6 @@ public class UserServiceImpl implements UserService {
 			String result = aes.decrypt((encryptedData), (session_key),
 					(iv));
 			
-				System.out.println("decrypt data ==========================================> " + result);
 				return result;
 			
 		} catch (Exception e) {
@@ -477,7 +475,7 @@ public class UserServiceImpl implements UserService {
 		// params2.put("trade_type", trade_type);
 		String signB = "";// 签名(该签名本应使用微信商户平台的API证书中的密匙key,但此处使用的是微信公众号的密匙APP_SECRET)
 		signB = FactoryUtils.getSign(params2, WX_KEY);
-		System.out.println("======================>" + signB);
+//		System.out.println("======================>" + signB);
 
 		// String prepay_id ="";
 		// for (String s : str.split("\n"))
@@ -518,29 +516,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	
-
-//	@Override
-//	public PytheResult selectAnswerIsLiked(Long userId,Long answerId) {
-//		// TODO Auto-generated method stub
-//		TblUserWithBLOBs user = userMapper.selectByPrimaryKey(userId);
-//		List<Long> answerList =  JsonUtils.jsonToPojo(user.getCollection(), Collection.class).getAnswers();
-//		//answerList没有收藏过
-//	    if (answerList==null) {
-//	    	return PytheResult.ok(false);
-//		}
-//		return PytheResult.ok(answerList.contains(answerId));
-//	}
-
-//	@Override
-//	public PytheResult selectTeacherIsLiked(Long userId,Long teacherId) {
-//		// TODO Auto-generated method stub
-//		TblUserWithBLOBs user = userMapper.selectByPrimaryKey(userId);
-//	    List<Long> teacherList =  JsonUtils.jsonToPojo(user.getCollection(), Collection.class).getTeacherIds();
-//	    if (teacherList==null) {
-//	    	return PytheResult.ok(false);
-//		}
-//			return PytheResult.ok(teacherList.contains(teacherId));
-//	}
 
 	@Override
 	public PytheResult selectUserByUserId(Long userId) {

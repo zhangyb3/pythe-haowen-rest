@@ -30,8 +30,6 @@ public class AnswerController {
 	@Autowired  
     private QuestionAnswersService questionAnswersService;
     
-
-    
     /**
      *点赞
      * @param string
@@ -135,7 +133,6 @@ public class AnswerController {
 	@ResponseBody
 	public PytheResult insertAnswer(@RequestBody String url) throws Exception {
 
-		url = URLDecoder.decode(url, "UTF-8");
 
 		try {
 			return PytheResult.ok(service.insertAnswer(url));
@@ -174,7 +171,6 @@ public class AnswerController {
 	public PytheResult selectKnowledgeList(@RequestParam("level1")String level1){
     	try {
     		
-    		//level1 = new String(level1.getBytes("iso8859-1"),"UTF-8");
     		return PytheResult.ok(service.selectSecondKnowledgeList(level1));
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -244,6 +240,7 @@ public class AnswerController {
 			return PytheResult.build(500, ExceptionUtil.getStackTrace(e));
 		}
 	}
+    
     
     /**
      * 我答:已答列表

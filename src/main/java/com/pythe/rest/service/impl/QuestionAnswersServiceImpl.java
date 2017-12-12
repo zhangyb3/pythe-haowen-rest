@@ -40,7 +40,8 @@ public class QuestionAnswersServiceImpl implements QuestionAnswersService{
 		List<JSONObject> resultList=new ArrayList<>();
 		for (VQuestionAnswersWithBLOBs vQuestionAnswersWithBLOBs : list) {
 			JSONObject json = new JSONObject();
-			
+			vQuestionAnswersWithBLOBs.setQuestioncontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getQuestioncontent()));
+			vQuestionAnswersWithBLOBs.setAnswercontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getAnswercontent()));
 		//计算时间
 			
 //		   long l=(new Date().getTime())-vQuestionAnswersWithBLOBs.getStarttime().getTime();
@@ -85,8 +86,9 @@ public class QuestionAnswersServiceImpl implements QuestionAnswersService{
 		for (VQuestionAnswersWithBLOBs vQuestionAnswersWithBLOBs : list) {
 			JSONObject json = new JSONObject();
 			
+			vQuestionAnswersWithBLOBs.setQuestioncontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getQuestioncontent()));
+			vQuestionAnswersWithBLOBs.setAnswercontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getAnswercontent()));
 		//计算时间
-			
 		   long l=(new Date().getTime())-vQuestionAnswersWithBLOBs.getStarttime().getTime();
 
 		   long day=l/(24*60*60*1000);
@@ -127,7 +129,8 @@ public class QuestionAnswersServiceImpl implements QuestionAnswersService{
 		List<JSONObject> resultList=new ArrayList<>();
 		for (VQuestionAnswersWithBLOBs vQuestionAnswersWithBLOBs : list) {
 			JSONObject json = new JSONObject();
-			
+			vQuestionAnswersWithBLOBs.setQuestioncontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getQuestioncontent()));
+			vQuestionAnswersWithBLOBs.setAnswercontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getAnswercontent()));
 		//计算时间
 //		   long l=(new Date().getTime())-vQuestionAnswersWithBLOBs.getStarttime().getTime();
 //
@@ -168,6 +171,8 @@ public class QuestionAnswersServiceImpl implements QuestionAnswersService{
 		
 		List<JSONObject> resultList=new ArrayList<>();
 		for (VQuestionAnswersWithBLOBs vQuestionAnswersWithBLOBs : list) {
+			vQuestionAnswersWithBLOBs.setQuestioncontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getQuestioncontent()));
+			vQuestionAnswersWithBLOBs.setAnswercontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getAnswercontent()));
 			JSONObject json = new JSONObject();
 			
 		//计算时间
