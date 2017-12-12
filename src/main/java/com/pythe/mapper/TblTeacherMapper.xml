@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.TblTeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.TblTeacher" >
+    <id column="teacherId" property="teacherid" jdbcType="BIGINT" />
+    <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+    <result column="masterKnowledge" property="masterknowledge" jdbcType="VARCHAR" />
+    <result column="popularity" property="popularity" jdbcType="BIGINT" />
+    <result column="organization" property="organization" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.TblTeacher" extends="BaseResultMap" >
+    <result column="decription" property="decription" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    teacherId, subjectId, masterKnowledge, popularity, organization
+  </sql>
+  <sql id="Blob_Column_List" >
+    decription
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.TblTeacherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.TblTeacherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_teacher
+    where teacherId = #{teacherid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_teacher
+    where teacherId = #{teacherid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.TblTeacherExample" >
+    delete from tbl_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.TblTeacher" >
+    insert into tbl_teacher (teacherId, subjectId, masterKnowledge, 
+      popularity, organization, decription
+      )
+    values (#{teacherid,jdbcType=BIGINT}, #{subjectid,jdbcType=INTEGER}, #{masterknowledge,jdbcType=VARCHAR}, 
+      #{popularity,jdbcType=BIGINT}, #{organization,jdbcType=BIGINT}, #{decription,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.TblTeacher" >
+    insert into tbl_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        teacherId,
+      </if>
+      <if test="subjectid != null" >
+        subjectId,
+      </if>
+      <if test="masterknowledge != null" >
+        masterKnowledge,
+      </if>
+      <if test="popularity != null" >
+        popularity,
+      </if>
+      <if test="organization != null" >
+        organization,
+      </if>
+      <if test="decription != null" >
+        decription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="subjectid != null" >
+        #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="masterknowledge != null" >
+        #{masterknowledge,jdbcType=VARCHAR},
+      </if>
+      <if test="popularity != null" >
+        #{popularity,jdbcType=BIGINT},
+      </if>
+      <if test="organization != null" >
+        #{organization,jdbcType=BIGINT},
+      </if>
+      <if test="decription != null" >
+        #{decription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.TblTeacherExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_teacher
+    <set >
+      <if test="record.teacherid != null" >
+        teacherId = #{record.teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="record.subjectid != null" >
+        subjectId = #{record.subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.masterknowledge != null" >
+        masterKnowledge = #{record.masterknowledge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.popularity != null" >
+        popularity = #{record.popularity,jdbcType=BIGINT},
+      </if>
+      <if test="record.organization != null" >
+        organization = #{record.organization,jdbcType=BIGINT},
+      </if>
+      <if test="record.decription != null" >
+        decription = #{record.decription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tbl_teacher
+    set teacherId = #{record.teacherid,jdbcType=BIGINT},
+      subjectId = #{record.subjectid,jdbcType=INTEGER},
+      masterKnowledge = #{record.masterknowledge,jdbcType=VARCHAR},
+      popularity = #{record.popularity,jdbcType=BIGINT},
+      organization = #{record.organization,jdbcType=BIGINT},
+      decription = #{record.decription,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_teacher
+    set teacherId = #{record.teacherid,jdbcType=BIGINT},
+      subjectId = #{record.subjectid,jdbcType=INTEGER},
+      masterKnowledge = #{record.masterknowledge,jdbcType=VARCHAR},
+      popularity = #{record.popularity,jdbcType=BIGINT},
+      organization = #{record.organization,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pythe.pojo.TblTeacher" >
+    update tbl_teacher
+    <set >
+      <if test="subjectid != null" >
+        subjectId = #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="masterknowledge != null" >
+        masterKnowledge = #{masterknowledge,jdbcType=VARCHAR},
+      </if>
+      <if test="popularity != null" >
+        popularity = #{popularity,jdbcType=BIGINT},
+      </if>
+      <if test="organization != null" >
+        organization = #{organization,jdbcType=BIGINT},
+      </if>
+      <if test="decription != null" >
+        decription = #{decription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where teacherId = #{teacherid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pythe.pojo.TblTeacher" >
+    update tbl_teacher
+    set subjectId = #{subjectid,jdbcType=INTEGER},
+      masterKnowledge = #{masterknowledge,jdbcType=VARCHAR},
+      popularity = #{popularity,jdbcType=BIGINT},
+      organization = #{organization,jdbcType=BIGINT},
+      decription = #{decription,jdbcType=LONGVARCHAR}
+    where teacherId = #{teacherid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pythe.pojo.TblTeacher" >
+    update tbl_teacher
+    set subjectId = #{subjectid,jdbcType=INTEGER},
+      masterKnowledge = #{masterknowledge,jdbcType=VARCHAR},
+      popularity = #{popularity,jdbcType=BIGINT},
+      organization = #{organization,jdbcType=BIGINT}
+    where teacherId = #{teacherid,jdbcType=BIGINT}
+  </update>
+</mapper>

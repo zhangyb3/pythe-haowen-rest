@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.VStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.VStudent" >
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="favorite" property="favorite" jdbcType="VARCHAR" />
+    <result column="gradeId" property="gradeid" jdbcType="INTEGER" />
+    <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="userImg" property="userimg" jdbcType="VARCHAR" />
+    <result column="openId" property="openid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.VStudentWithBLOBs" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="collection" property="collection" jdbcType="LONGVARCHAR" />
+    <result column="knowledgeSpace" property="knowledgespace" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userId, username, favorite, gradeId, subjectId, status, userImg, openId
+  </sql>
+  <sql id="Blob_Column_List" >
+    description, collection, knowledgeSpace
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.VStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from v_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.VStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from v_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.VStudentExample" >
+    delete from v_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.VStudentWithBLOBs" >
+    insert into v_student (userId, username, favorite, 
+      gradeId, subjectId, status, 
+      userImg, openId, description, 
+      collection, knowledgeSpace)
+    values (#{userid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{favorite,jdbcType=VARCHAR}, 
+      #{gradeid,jdbcType=INTEGER}, #{subjectid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{userimg,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, 
+      #{collection,jdbcType=LONGVARCHAR}, #{knowledgespace,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.VStudentWithBLOBs" >
+    insert into v_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="favorite != null" >
+        favorite,
+      </if>
+      <if test="gradeid != null" >
+        gradeId,
+      </if>
+      <if test="subjectid != null" >
+        subjectId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="userimg != null" >
+        userImg,
+      </if>
+      <if test="openid != null" >
+        openId,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="collection != null" >
+        collection,
+      </if>
+      <if test="knowledgespace != null" >
+        knowledgeSpace,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="favorite != null" >
+        #{favorite,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeid != null" >
+        #{gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="subjectid != null" >
+        #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userimg != null" >
+        #{userimg,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="collection != null" >
+        #{collection,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="knowledgespace != null" >
+        #{knowledgespace,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.VStudentExample" resultType="java.lang.Integer" >
+    select count(*) from v_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update v_student
+    <set >
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.favorite != null" >
+        favorite = #{record.favorite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradeid != null" >
+        gradeId = #{record.gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectid != null" >
+        subjectId = #{record.subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.userimg != null" >
+        userImg = #{record.userimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openid != null" >
+        openId = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.collection != null" >
+        collection = #{record.collection,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.knowledgespace != null" >
+        knowledgeSpace = #{record.knowledgespace,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update v_student
+    set userId = #{record.userid,jdbcType=BIGINT},
+      username = #{record.username,jdbcType=VARCHAR},
+      favorite = #{record.favorite,jdbcType=VARCHAR},
+      gradeId = #{record.gradeid,jdbcType=INTEGER},
+      subjectId = #{record.subjectid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      userImg = #{record.userimg,jdbcType=VARCHAR},
+      openId = #{record.openid,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=LONGVARCHAR},
+      collection = #{record.collection,jdbcType=LONGVARCHAR},
+      knowledgeSpace = #{record.knowledgespace,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update v_student
+    set userId = #{record.userid,jdbcType=BIGINT},
+      username = #{record.username,jdbcType=VARCHAR},
+      favorite = #{record.favorite,jdbcType=VARCHAR},
+      gradeId = #{record.gradeid,jdbcType=INTEGER},
+      subjectId = #{record.subjectid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      userImg = #{record.userimg,jdbcType=VARCHAR},
+      openId = #{record.openid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

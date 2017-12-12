@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.VStudentStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.VStudentStatistics" >
+    <result column="studentId" property="studentid" jdbcType="BIGINT" />
+    <result column="favorite" property="favorite" jdbcType="VARCHAR" />
+    <result column="outcome" property="outcome" jdbcType="DOUBLE" />
+    <result column="studentName" property="studentname" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.VStudentStatisticsWithBLOBs" extends="BaseResultMap" >
+    <result column="collection" property="collection" jdbcType="LONGVARCHAR" />
+    <result column="knowledgeSpace" property="knowledgespace" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    studentId, favorite, outcome, studentName
+  </sql>
+  <sql id="Blob_Column_List" >
+    collection, knowledgeSpace
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.VStudentStatisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from v_student_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.VStudentStatisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from v_student_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.VStudentStatisticsExample" >
+    delete from v_student_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.VStudentStatisticsWithBLOBs" >
+    insert into v_student_statistics (studentId, favorite, outcome, 
+      studentName, collection, knowledgeSpace
+      )
+    values (#{studentid,jdbcType=BIGINT}, #{favorite,jdbcType=VARCHAR}, #{outcome,jdbcType=DOUBLE}, 
+      #{studentname,jdbcType=VARCHAR}, #{collection,jdbcType=LONGVARCHAR}, #{knowledgespace,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.VStudentStatisticsWithBLOBs" >
+    insert into v_student_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="favorite != null" >
+        favorite,
+      </if>
+      <if test="outcome != null" >
+        outcome,
+      </if>
+      <if test="studentname != null" >
+        studentName,
+      </if>
+      <if test="collection != null" >
+        collection,
+      </if>
+      <if test="knowledgespace != null" >
+        knowledgeSpace,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="favorite != null" >
+        #{favorite,jdbcType=VARCHAR},
+      </if>
+      <if test="outcome != null" >
+        #{outcome,jdbcType=DOUBLE},
+      </if>
+      <if test="studentname != null" >
+        #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="collection != null" >
+        #{collection,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="knowledgespace != null" >
+        #{knowledgespace,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.VStudentStatisticsExample" resultType="java.lang.Integer" >
+    select count(*) from v_student_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update v_student_statistics
+    <set >
+      <if test="record.studentid != null" >
+        studentId = #{record.studentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.favorite != null" >
+        favorite = #{record.favorite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outcome != null" >
+        outcome = #{record.outcome,jdbcType=DOUBLE},
+      </if>
+      <if test="record.studentname != null" >
+        studentName = #{record.studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collection != null" >
+        collection = #{record.collection,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.knowledgespace != null" >
+        knowledgeSpace = #{record.knowledgespace,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update v_student_statistics
+    set studentId = #{record.studentid,jdbcType=BIGINT},
+      favorite = #{record.favorite,jdbcType=VARCHAR},
+      outcome = #{record.outcome,jdbcType=DOUBLE},
+      studentName = #{record.studentname,jdbcType=VARCHAR},
+      collection = #{record.collection,jdbcType=LONGVARCHAR},
+      knowledgeSpace = #{record.knowledgespace,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update v_student_statistics
+    set studentId = #{record.studentid,jdbcType=BIGINT},
+      favorite = #{record.favorite,jdbcType=VARCHAR},
+      outcome = #{record.outcome,jdbcType=DOUBLE},
+      studentName = #{record.studentname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

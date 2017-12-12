@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.VQuestionAnswersMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.VQuestionAnswers" >
+    <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+    <result column="questionId" property="questionid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="reward" property="reward" jdbcType="DOUBLE" />
+    <result column="studentId" property="studentid" jdbcType="BIGINT" />
+    <result column="teacherId" property="teacherid" jdbcType="BIGINT" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="answerId" property="answerid" jdbcType="BIGINT" />
+    <result column="likesNum" property="likesnum" jdbcType="BIGINT" />
+    <result column="rewardNum" property="rewardnum" jdbcType="DOUBLE" />
+    <result column="studentName" property="studentname" jdbcType="VARCHAR" />
+    <result column="studentImg" property="studentimg" jdbcType="VARCHAR" />
+    <result column="teacherName" property="teachername" jdbcType="VARCHAR" />
+    <result column="teacherImg" property="teacherimg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.VQuestionAnswersWithBLOBs" extends="BaseResultMap" >
+    <result column="questionContent" property="questioncontent" jdbcType="LONGVARCHAR" />
+    <result column="answerContent" property="answercontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    subjectId, questionId, status, reward, studentId, teacherId, startTime, endTime, 
+    answerId, likesNum, rewardNum, studentName, studentImg, teacherName, teacherImg
+  </sql>
+  <sql id="Blob_Column_List" >
+    questionContent, answerContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.VQuestionAnswersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from v_question_answers
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.VQuestionAnswersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from v_question_answers
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.VQuestionAnswersExample" >
+    delete from v_question_answers
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.VQuestionAnswersWithBLOBs" >
+    insert into v_question_answers (subjectId, questionId, status, 
+      reward, studentId, teacherId, 
+      startTime, endTime, answerId, 
+      likesNum, rewardNum, studentName, 
+      studentImg, teacherName, teacherImg, 
+      questionContent, answerContent)
+    values (#{subjectid,jdbcType=INTEGER}, #{questionid,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{reward,jdbcType=DOUBLE}, #{studentid,jdbcType=BIGINT}, #{teacherid,jdbcType=BIGINT}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{answerid,jdbcType=BIGINT}, 
+      #{likesnum,jdbcType=BIGINT}, #{rewardnum,jdbcType=DOUBLE}, #{studentname,jdbcType=VARCHAR}, 
+      #{studentimg,jdbcType=VARCHAR}, #{teachername,jdbcType=VARCHAR}, #{teacherimg,jdbcType=VARCHAR}, 
+      #{questioncontent,jdbcType=LONGVARCHAR}, #{answercontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.VQuestionAnswersWithBLOBs" >
+    insert into v_question_answers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subjectid != null" >
+        subjectId,
+      </if>
+      <if test="questionid != null" >
+        questionId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="reward != null" >
+        reward,
+      </if>
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="teacherid != null" >
+        teacherId,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="answerid != null" >
+        answerId,
+      </if>
+      <if test="likesnum != null" >
+        likesNum,
+      </if>
+      <if test="rewardnum != null" >
+        rewardNum,
+      </if>
+      <if test="studentname != null" >
+        studentName,
+      </if>
+      <if test="studentimg != null" >
+        studentImg,
+      </if>
+      <if test="teachername != null" >
+        teacherName,
+      </if>
+      <if test="teacherimg != null" >
+        teacherImg,
+      </if>
+      <if test="questioncontent != null" >
+        questionContent,
+      </if>
+      <if test="answercontent != null" >
+        answerContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subjectid != null" >
+        #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="questionid != null" >
+        #{questionid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null" >
+        #{reward,jdbcType=DOUBLE},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="answerid != null" >
+        #{answerid,jdbcType=BIGINT},
+      </if>
+      <if test="likesnum != null" >
+        #{likesnum,jdbcType=BIGINT},
+      </if>
+      <if test="rewardnum != null" >
+        #{rewardnum,jdbcType=DOUBLE},
+      </if>
+      <if test="studentname != null" >
+        #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="studentimg != null" >
+        #{studentimg,jdbcType=VARCHAR},
+      </if>
+      <if test="teachername != null" >
+        #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherimg != null" >
+        #{teacherimg,jdbcType=VARCHAR},
+      </if>
+      <if test="questioncontent != null" >
+        #{questioncontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answercontent != null" >
+        #{answercontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.VQuestionAnswersExample" resultType="java.lang.Integer" >
+    select count(*) from v_question_answers
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update v_question_answers
+    <set >
+      <if test="record.subjectid != null" >
+        subjectId = #{record.subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionid != null" >
+        questionId = #{record.questionid,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.reward != null" >
+        reward = #{record.reward,jdbcType=DOUBLE},
+      </if>
+      <if test="record.studentid != null" >
+        studentId = #{record.studentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherid != null" >
+        teacherId = #{record.teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="record.starttime != null" >
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.answerid != null" >
+        answerId = #{record.answerid,jdbcType=BIGINT},
+      </if>
+      <if test="record.likesnum != null" >
+        likesNum = #{record.likesnum,jdbcType=BIGINT},
+      </if>
+      <if test="record.rewardnum != null" >
+        rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.studentname != null" >
+        studentName = #{record.studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentimg != null" >
+        studentImg = #{record.studentimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teachername != null" >
+        teacherName = #{record.teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherimg != null" >
+        teacherImg = #{record.teacherimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questioncontent != null" >
+        questionContent = #{record.questioncontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.answercontent != null" >
+        answerContent = #{record.answercontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update v_question_answers
+    set subjectId = #{record.subjectid,jdbcType=INTEGER},
+      questionId = #{record.questionid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      reward = #{record.reward,jdbcType=DOUBLE},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      teacherId = #{record.teacherid,jdbcType=BIGINT},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      answerId = #{record.answerid,jdbcType=BIGINT},
+      likesNum = #{record.likesnum,jdbcType=BIGINT},
+      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      studentName = #{record.studentname,jdbcType=VARCHAR},
+      studentImg = #{record.studentimg,jdbcType=VARCHAR},
+      teacherName = #{record.teachername,jdbcType=VARCHAR},
+      teacherImg = #{record.teacherimg,jdbcType=VARCHAR},
+      questionContent = #{record.questioncontent,jdbcType=LONGVARCHAR},
+      answerContent = #{record.answercontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update v_question_answers
+    set subjectId = #{record.subjectid,jdbcType=INTEGER},
+      questionId = #{record.questionid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      reward = #{record.reward,jdbcType=DOUBLE},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      teacherId = #{record.teacherid,jdbcType=BIGINT},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      answerId = #{record.answerid,jdbcType=BIGINT},
+      likesNum = #{record.likesnum,jdbcType=BIGINT},
+      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      studentName = #{record.studentname,jdbcType=VARCHAR},
+      studentImg = #{record.studentimg,jdbcType=VARCHAR},
+      teacherName = #{record.teachername,jdbcType=VARCHAR},
+      teacherImg = #{record.teacherimg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+              <!-- is -->
+  	<select id="selectIsAnswerListByTeacherId" parameterType="Long" resultType="com.pythe.pojo.VQuestionAnswersWithBLOBs">
+		SELECT * FROM v_question_answers WHERE teacherId=#{teacherId} and status = 3
+	</select>
+	<!-- is not -->
+	 <select id="selectIsNotAnswerListByTeacherId" parameterType="Long" resultType="com.pythe.pojo.VQuestionAnswersWithBLOBs">
+	 		SELECT * FROM v_question_answers WHERE teacherId=#{teacherId} and status = 1
+	</select>
+	
+	        <!-- is -->
+  	<select id="selectIsAnswerListByStudentId" parameterType="Long" resultType="com.pythe.pojo.VQuestionAnswersWithBLOBs">
+		SELECT * FROM v_question_answers WHERE studentId=#{studentId} and status = 3
+	</select>
+	<!-- is not -->
+	 <select id="selectIsNotAnswerListByStudentId" parameterType="Long" resultType="com.pythe.pojo.VQuestionAnswersWithBLOBs">
+	 		SELECT * FROM v_question_answers WHERE studentId=#{studentId} and status = 1
+	</select>
+	
+</mapper>

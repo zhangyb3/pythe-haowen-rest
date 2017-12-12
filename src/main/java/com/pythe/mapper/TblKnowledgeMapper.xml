@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.TblKnowledgeMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.TblKnowledge" >
+    <id column="knowledgeId" property="knowledgeid" jdbcType="BIGINT" />
+    <result column="gradeId" property="gradeid" jdbcType="INTEGER" />
+    <result column="level1" property="level1" jdbcType="VARCHAR" />
+    <result column="level2" property="level2" jdbcType="VARCHAR" />
+    <result column="knowledge" property="knowledge" jdbcType="VARCHAR" />
+    <result column="similarity" property="similarity" jdbcType="VARCHAR" />
+    <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    knowledgeId, gradeId, level1, level2, knowledge, similarity, subjectId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.TblKnowledgeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_knowledge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_knowledge
+    where knowledgeId = #{knowledgeid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_knowledge
+    where knowledgeId = #{knowledgeid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.TblKnowledgeExample" >
+    delete from tbl_knowledge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.TblKnowledge" >
+    insert into tbl_knowledge (knowledgeId, gradeId, level1, 
+      level2, knowledge, similarity, 
+      subjectId)
+    values (#{knowledgeid,jdbcType=BIGINT}, #{gradeid,jdbcType=INTEGER}, #{level1,jdbcType=VARCHAR}, 
+      #{level2,jdbcType=VARCHAR}, #{knowledge,jdbcType=VARCHAR}, #{similarity,jdbcType=VARCHAR}, 
+      #{subjectid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.TblKnowledge" >
+    insert into tbl_knowledge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="knowledgeid != null" >
+        knowledgeId,
+      </if>
+      <if test="gradeid != null" >
+        gradeId,
+      </if>
+      <if test="level1 != null" >
+        level1,
+      </if>
+      <if test="level2 != null" >
+        level2,
+      </if>
+      <if test="knowledge != null" >
+        knowledge,
+      </if>
+      <if test="similarity != null" >
+        similarity,
+      </if>
+      <if test="subjectid != null" >
+        subjectId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="knowledgeid != null" >
+        #{knowledgeid,jdbcType=BIGINT},
+      </if>
+      <if test="gradeid != null" >
+        #{gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="level1 != null" >
+        #{level1,jdbcType=VARCHAR},
+      </if>
+      <if test="level2 != null" >
+        #{level2,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledge != null" >
+        #{knowledge,jdbcType=VARCHAR},
+      </if>
+      <if test="similarity != null" >
+        #{similarity,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectid != null" >
+        #{subjectid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.TblKnowledgeExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_knowledge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_knowledge
+    <set >
+      <if test="record.knowledgeid != null" >
+        knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.gradeid != null" >
+        gradeId = #{record.gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.level1 != null" >
+        level1 = #{record.level1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level2 != null" >
+        level2 = #{record.level2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.knowledge != null" >
+        knowledge = #{record.knowledge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.similarity != null" >
+        similarity = #{record.similarity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectid != null" >
+        subjectId = #{record.subjectid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_knowledge
+    set knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
+      gradeId = #{record.gradeid,jdbcType=INTEGER},
+      level1 = #{record.level1,jdbcType=VARCHAR},
+      level2 = #{record.level2,jdbcType=VARCHAR},
+      knowledge = #{record.knowledge,jdbcType=VARCHAR},
+      similarity = #{record.similarity,jdbcType=VARCHAR},
+      subjectId = #{record.subjectid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pythe.pojo.TblKnowledge" >
+    update tbl_knowledge
+    <set >
+      <if test="gradeid != null" >
+        gradeId = #{gradeid,jdbcType=INTEGER},
+      </if>
+      <if test="level1 != null" >
+        level1 = #{level1,jdbcType=VARCHAR},
+      </if>
+      <if test="level2 != null" >
+        level2 = #{level2,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledge != null" >
+        knowledge = #{knowledge,jdbcType=VARCHAR},
+      </if>
+      <if test="similarity != null" >
+        similarity = #{similarity,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectid != null" >
+        subjectId = #{subjectid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where knowledgeId = #{knowledgeid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pythe.pojo.TblKnowledge" >
+    update tbl_knowledge
+    set gradeId = #{gradeid,jdbcType=INTEGER},
+      level1 = #{level1,jdbcType=VARCHAR},
+      level2 = #{level2,jdbcType=VARCHAR},
+      knowledge = #{knowledge,jdbcType=VARCHAR},
+      similarity = #{similarity,jdbcType=VARCHAR},
+      subjectId = #{subjectid,jdbcType=INTEGER}
+    where knowledgeId = #{knowledgeid,jdbcType=BIGINT}
+  </update>
+       <select id="selectFirstKnowledgeList" resultMap="BaseResultMap">
+			SELECT level1 FROM tbl_knowledge WHERE subjectId=#{subjectId} AND FORMAT(gradeId/100,0)=#{phase} GROUP BY level1
+	</select>
+	
+	 <select id="selectSecondKnowledgeList" parameterType="String" resultType="com.pythe.pojo.TblKnowledge">
+	 SELECT knowledgeId,level2 FROM tbl_knowledge WHERE level1=#{level1} GROUP BY level2
+	</select>
+</mapper>

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.TblBlacklistMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.TblBlacklist" >
+    <id column="blacklistId" property="blacklistid" jdbcType="BIGINT" />
+    <result column="answerId" property="answerid" jdbcType="BIGINT" />
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="complainedId" property="complainedid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.TblBlacklist" extends="BaseResultMap" >
+    <result column="reason" property="reason" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    blacklistId, answerId, userId, startTime, complainedId, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    reason
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.TblBlacklistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_blacklist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.TblBlacklistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_blacklist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_blacklist
+    where blacklistId = #{blacklistid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_blacklist
+    where blacklistId = #{blacklistid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.TblBlacklistExample" >
+    delete from tbl_blacklist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.TblBlacklist" >
+       <selectKey keyProperty="blacklistid" order="AFTER" resultType="java.lang.Long">
+	     select LAST_INSERT_ID()
+	</selectKey>
+    insert into tbl_blacklist (blacklistId, answerId, userId, 
+      startTime, complainedId, status, 
+      reason)
+    values (#{blacklistid,jdbcType=BIGINT}, #{answerid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{complainedid,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.TblBlacklist" >
+    insert into tbl_blacklist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="blacklistid != null" >
+        blacklistId,
+      </if>
+      <if test="answerid != null" >
+        answerId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="complainedid != null" >
+        complainedId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="blacklistid != null" >
+        #{blacklistid,jdbcType=BIGINT},
+      </if>
+      <if test="answerid != null" >
+        #{answerid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="complainedid != null" >
+        #{complainedid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.TblBlacklistExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_blacklist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_blacklist
+    <set >
+      <if test="record.blacklistid != null" >
+        blacklistId = #{record.blacklistid,jdbcType=BIGINT},
+      </if>
+      <if test="record.answerid != null" >
+        answerId = #{record.answerid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.starttime != null" >
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.complainedid != null" >
+        complainedId = #{record.complainedid,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.reason != null" >
+        reason = #{record.reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tbl_blacklist
+    set blacklistId = #{record.blacklistid,jdbcType=BIGINT},
+      answerId = #{record.answerid,jdbcType=BIGINT},
+      userId = #{record.userid,jdbcType=BIGINT},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      complainedId = #{record.complainedid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      reason = #{record.reason,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_blacklist
+    set blacklistId = #{record.blacklistid,jdbcType=BIGINT},
+      answerId = #{record.answerid,jdbcType=BIGINT},
+      userId = #{record.userid,jdbcType=BIGINT},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      complainedId = #{record.complainedid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pythe.pojo.TblBlacklist" >
+    update tbl_blacklist
+    <set >
+      <if test="answerid != null" >
+        answerId = #{answerid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="starttime != null" >
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="complainedid != null" >
+        complainedId = #{complainedid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where blacklistId = #{blacklistid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pythe.pojo.TblBlacklist" >
+    update tbl_blacklist
+    set answerId = #{answerid,jdbcType=BIGINT},
+      userId = #{userid,jdbcType=BIGINT},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
+      complainedId = #{complainedid,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=LONGVARCHAR}
+    where blacklistId = #{blacklistid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pythe.pojo.TblBlacklist" >
+    update tbl_blacklist
+    set answerId = #{answerid,jdbcType=BIGINT},
+      userId = #{userid,jdbcType=BIGINT},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
+      complainedId = #{complainedid,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where blacklistId = #{blacklistid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.TblAnswerMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.TblAnswer" >
+    <id column="answerId" property="answerid" jdbcType="BIGINT" />
+    <result column="questionId" property="questionid" jdbcType="BIGINT" />
+    <result column="studentId" property="studentid" jdbcType="BIGINT" />
+    <result column="teacherId" property="teacherid" jdbcType="BIGINT" />
+    <result column="fee" property="fee" jdbcType="DOUBLE" />
+    <result column="rewardNum" property="rewardnum" jdbcType="DOUBLE" />
+    <result column="likesNum" property="likesnum" jdbcType="BIGINT" />
+    <result column="answerTime" property="answertime" jdbcType="TIMESTAMP" />
+    <result column="answerGrade" property="answergrade" jdbcType="VARCHAR" />
+    <result column="knowledgeId" property="knowledgeid" jdbcType="BIGINT" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="a_status" property="aStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.TblAnswer" extends="BaseResultMap" >
+    <result column="answerContent" property="answercontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    answerId, questionId, studentId, teacherId, fee, rewardNum, likesNum, answerTime, 
+    answerGrade, knowledgeId, updatetime, a_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    answerContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.TblAnswerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.TblAnswerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_answer
+    where answerId = #{answerid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_answer
+    where answerId = #{answerid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.TblAnswerExample" >
+    delete from tbl_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.TblAnswer" >
+  	<selectKey keyProperty="answerid" order="AFTER" resultType="java.lang.Long">
+	     select LAST_INSERT_ID()
+	</selectKey>
+    insert into tbl_answer (answerId, questionId, studentId, 
+      teacherId, fee, rewardNum, 
+      likesNum, answerTime, answerGrade, 
+      knowledgeId, updatetime, a_status, 
+      answerContent)
+    values (#{answerid,jdbcType=BIGINT}, #{questionid,jdbcType=BIGINT}, #{studentid,jdbcType=BIGINT}, 
+      #{teacherid,jdbcType=BIGINT}, #{fee,jdbcType=DOUBLE}, #{rewardnum,jdbcType=DOUBLE}, 
+      #{likesnum,jdbcType=BIGINT}, #{answertime,jdbcType=TIMESTAMP}, #{answergrade,jdbcType=VARCHAR}, 
+      #{knowledgeid,jdbcType=BIGINT}, #{updatetime,jdbcType=TIMESTAMP}, #{aStatus,jdbcType=INTEGER}, 
+      #{answercontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.TblAnswer" >
+    insert into tbl_answer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="answerid != null" >
+        answerId,
+      </if>
+      <if test="questionid != null" >
+        questionId,
+      </if>
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="teacherid != null" >
+        teacherId,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="rewardnum != null" >
+        rewardNum,
+      </if>
+      <if test="likesnum != null" >
+        likesNum,
+      </if>
+      <if test="answertime != null" >
+        answerTime,
+      </if>
+      <if test="answergrade != null" >
+        answerGrade,
+      </if>
+      <if test="knowledgeid != null" >
+        knowledgeId,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="aStatus != null" >
+        a_status,
+      </if>
+      <if test="answercontent != null" >
+        answerContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="answerid != null" >
+        #{answerid,jdbcType=BIGINT},
+      </if>
+      <if test="questionid != null" >
+        #{questionid,jdbcType=BIGINT},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DOUBLE},
+      </if>
+      <if test="rewardnum != null" >
+        #{rewardnum,jdbcType=DOUBLE},
+      </if>
+      <if test="likesnum != null" >
+        #{likesnum,jdbcType=BIGINT},
+      </if>
+      <if test="answertime != null" >
+        #{answertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="answergrade != null" >
+        #{answergrade,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeid != null" >
+        #{knowledgeid,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aStatus != null" >
+        #{aStatus,jdbcType=INTEGER},
+      </if>
+      <if test="answercontent != null" >
+        #{answercontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.TblAnswerExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_answer
+    <set >
+      <if test="record.answerid != null" >
+        answerId = #{record.answerid,jdbcType=BIGINT},
+      </if>
+      <if test="record.questionid != null" >
+        questionId = #{record.questionid,jdbcType=BIGINT},
+      </if>
+      <if test="record.studentid != null" >
+        studentId = #{record.studentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherid != null" >
+        teacherId = #{record.teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="record.fee != null" >
+        fee = #{record.fee,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rewardnum != null" >
+        rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.likesnum != null" >
+        likesNum = #{record.likesnum,jdbcType=BIGINT},
+      </if>
+      <if test="record.answertime != null" >
+        answerTime = #{record.answertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.answergrade != null" >
+        answerGrade = #{record.answergrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.knowledgeid != null" >
+        knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aStatus != null" >
+        a_status = #{record.aStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.answercontent != null" >
+        answerContent = #{record.answercontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tbl_answer
+    set answerId = #{record.answerid,jdbcType=BIGINT},
+      questionId = #{record.questionid,jdbcType=BIGINT},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      teacherId = #{record.teacherid,jdbcType=BIGINT},
+      fee = #{record.fee,jdbcType=DOUBLE},
+      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      likesNum = #{record.likesnum,jdbcType=BIGINT},
+      answerTime = #{record.answertime,jdbcType=TIMESTAMP},
+      answerGrade = #{record.answergrade,jdbcType=VARCHAR},
+      knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      a_status = #{record.aStatus,jdbcType=INTEGER},
+      answerContent = #{record.answercontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_answer
+    set answerId = #{record.answerid,jdbcType=BIGINT},
+      questionId = #{record.questionid,jdbcType=BIGINT},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      teacherId = #{record.teacherid,jdbcType=BIGINT},
+      fee = #{record.fee,jdbcType=DOUBLE},
+      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      likesNum = #{record.likesnum,jdbcType=BIGINT},
+      answerTime = #{record.answertime,jdbcType=TIMESTAMP},
+      answerGrade = #{record.answergrade,jdbcType=VARCHAR},
+      knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      a_status = #{record.aStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pythe.pojo.TblAnswer" >
+    update tbl_answer
+    <set >
+      <if test="questionid != null" >
+        questionId = #{questionid,jdbcType=BIGINT},
+      </if>
+      <if test="studentid != null" >
+        studentId = #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="teacherid != null" >
+        teacherId = #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DOUBLE},
+      </if>
+      <if test="rewardnum != null" >
+        rewardNum = #{rewardnum,jdbcType=DOUBLE},
+      </if>
+      <if test="likesnum != null" >
+        likesNum = #{likesnum,jdbcType=BIGINT},
+      </if>
+      <if test="answertime != null" >
+        answerTime = #{answertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="answergrade != null" >
+        answerGrade = #{answergrade,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeid != null" >
+        knowledgeId = #{knowledgeid,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aStatus != null" >
+        a_status = #{aStatus,jdbcType=INTEGER},
+      </if>
+      <if test="answercontent != null" >
+        answerContent = #{answercontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where answerId = #{answerid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pythe.pojo.TblAnswer" >
+    update tbl_answer
+    set questionId = #{questionid,jdbcType=BIGINT},
+      studentId = #{studentid,jdbcType=BIGINT},
+      teacherId = #{teacherid,jdbcType=BIGINT},
+      fee = #{fee,jdbcType=DOUBLE},
+      rewardNum = #{rewardnum,jdbcType=DOUBLE},
+      likesNum = #{likesnum,jdbcType=BIGINT},
+      answerTime = #{answertime,jdbcType=TIMESTAMP},
+      answerGrade = #{answergrade,jdbcType=VARCHAR},
+      knowledgeId = #{knowledgeid,jdbcType=BIGINT},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      a_status = #{aStatus,jdbcType=INTEGER},
+      answerContent = #{answercontent,jdbcType=LONGVARCHAR}
+    where answerId = #{answerid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pythe.pojo.TblAnswer" >
+    update tbl_answer
+    set questionId = #{questionid,jdbcType=BIGINT},
+      studentId = #{studentid,jdbcType=BIGINT},
+      teacherId = #{teacherid,jdbcType=BIGINT},
+      fee = #{fee,jdbcType=DOUBLE},
+      rewardNum = #{rewardnum,jdbcType=DOUBLE},
+      likesNum = #{likesnum,jdbcType=BIGINT},
+      answerTime = #{answertime,jdbcType=TIMESTAMP},
+      answerGrade = #{answergrade,jdbcType=VARCHAR},
+      knowledgeId = #{knowledgeid,jdbcType=BIGINT},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      a_status = #{aStatus,jdbcType=INTEGER}
+    where answerId = #{answerid,jdbcType=BIGINT}
+  </update>
+         <select id="selectSumByTeacherId" parameterType="Long" resultType="java.lang.Double">
+		SELECT SUM(rewardNum)+SUM(fee) FROM tbl_answer WHERE teacherId=#{teacherId}
+	</select>
+</mapper>

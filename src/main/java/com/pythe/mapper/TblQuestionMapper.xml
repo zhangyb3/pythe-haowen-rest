@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.TblQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.TblQuestion" >
+    <id column="questionId" property="questionid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="studentId" property="studentid" jdbcType="BIGINT" />
+    <result column="teacherId" property="teacherid" jdbcType="BIGINT" />
+    <result column="reward" property="reward" jdbcType="DOUBLE" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+    <result column="counter" property="counter" jdbcType="INTEGER" />
+    <result column="answered" property="answered" jdbcType="VARCHAR" />
+    <result column="users_selected" property="usersSelected" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.TblQuestion" extends="BaseResultMap" >
+    <result column="questionContent" property="questioncontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    questionId, status, studentId, teacherId, reward, startTime, endTime, subjectId, 
+    counter, answered, users_selected
+  </sql>
+  <sql id="Blob_Column_List" >
+    questionContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.TblQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.TblQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_question
+    where questionId = #{questionid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_question
+    where questionId = #{questionid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.TblQuestionExample" >
+    delete from tbl_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.TblQuestion" >
+  	<selectKey keyProperty="questionid" order="AFTER" resultType="java.lang.Long">
+	     select LAST_INSERT_ID()
+	</selectKey>
+    insert into tbl_question (questionId, status, studentId, 
+      teacherId, reward, startTime, 
+      endTime, subjectId, counter, 
+      answered, users_selected, questionContent
+      )
+    values (#{questionid,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{studentid,jdbcType=BIGINT}, 
+      #{teacherid,jdbcType=BIGINT}, #{reward,jdbcType=DOUBLE}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{subjectid,jdbcType=INTEGER}, #{counter,jdbcType=INTEGER}, 
+      #{answered,jdbcType=VARCHAR}, #{usersSelected,jdbcType=VARCHAR}, #{questioncontent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.TblQuestion" >
+    insert into tbl_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionid != null" >
+        questionId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="teacherid != null" >
+        teacherId,
+      </if>
+      <if test="reward != null" >
+        reward,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="subjectid != null" >
+        subjectId,
+      </if>
+      <if test="counter != null" >
+        counter,
+      </if>
+      <if test="answered != null" >
+        answered,
+      </if>
+      <if test="usersSelected != null" >
+        users_selected,
+      </if>
+      <if test="questioncontent != null" >
+        questionContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionid != null" >
+        #{questionid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="reward != null" >
+        #{reward,jdbcType=DOUBLE},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectid != null" >
+        #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="counter != null" >
+        #{counter,jdbcType=INTEGER},
+      </if>
+      <if test="answered != null" >
+        #{answered,jdbcType=VARCHAR},
+      </if>
+      <if test="usersSelected != null" >
+        #{usersSelected,jdbcType=VARCHAR},
+      </if>
+      <if test="questioncontent != null" >
+        #{questioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.TblQuestionExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_question
+    <set >
+      <if test="record.questionid != null" >
+        questionId = #{record.questionid,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentid != null" >
+        studentId = #{record.studentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherid != null" >
+        teacherId = #{record.teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="record.reward != null" >
+        reward = #{record.reward,jdbcType=DOUBLE},
+      </if>
+      <if test="record.starttime != null" >
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.subjectid != null" >
+        subjectId = #{record.subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.counter != null" >
+        counter = #{record.counter,jdbcType=INTEGER},
+      </if>
+      <if test="record.answered != null" >
+        answered = #{record.answered,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersSelected != null" >
+        users_selected = #{record.usersSelected,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questioncontent != null" >
+        questionContent = #{record.questioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tbl_question
+    set questionId = #{record.questionid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      teacherId = #{record.teacherid,jdbcType=BIGINT},
+      reward = #{record.reward,jdbcType=DOUBLE},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      subjectId = #{record.subjectid,jdbcType=INTEGER},
+      counter = #{record.counter,jdbcType=INTEGER},
+      answered = #{record.answered,jdbcType=VARCHAR},
+      users_selected = #{record.usersSelected,jdbcType=VARCHAR},
+      questionContent = #{record.questioncontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_question
+    set questionId = #{record.questionid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      teacherId = #{record.teacherid,jdbcType=BIGINT},
+      reward = #{record.reward,jdbcType=DOUBLE},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      subjectId = #{record.subjectid,jdbcType=INTEGER},
+      counter = #{record.counter,jdbcType=INTEGER},
+      answered = #{record.answered,jdbcType=VARCHAR},
+      users_selected = #{record.usersSelected,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pythe.pojo.TblQuestion" >
+    update tbl_question
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="studentid != null" >
+        studentId = #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="teacherid != null" >
+        teacherId = #{teacherid,jdbcType=BIGINT},
+      </if>
+      <if test="reward != null" >
+        reward = #{reward,jdbcType=DOUBLE},
+      </if>
+      <if test="starttime != null" >
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subjectid != null" >
+        subjectId = #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="counter != null" >
+        counter = #{counter,jdbcType=INTEGER},
+      </if>
+      <if test="answered != null" >
+        answered = #{answered,jdbcType=VARCHAR},
+      </if>
+      <if test="usersSelected != null" >
+        users_selected = #{usersSelected,jdbcType=VARCHAR},
+      </if>
+      <if test="questioncontent != null" >
+        questionContent = #{questioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where questionId = #{questionid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pythe.pojo.TblQuestion" >
+    update tbl_question
+    set status = #{status,jdbcType=INTEGER},
+      studentId = #{studentid,jdbcType=BIGINT},
+      teacherId = #{teacherid,jdbcType=BIGINT},
+      reward = #{reward,jdbcType=DOUBLE},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      subjectId = #{subjectid,jdbcType=INTEGER},
+      counter = #{counter,jdbcType=INTEGER},
+      answered = #{answered,jdbcType=VARCHAR},
+      users_selected = #{usersSelected,jdbcType=VARCHAR},
+      questionContent = #{questioncontent,jdbcType=LONGVARCHAR}
+    where questionId = #{questionid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pythe.pojo.TblQuestion" >
+    update tbl_question
+    set status = #{status,jdbcType=INTEGER},
+      studentId = #{studentid,jdbcType=BIGINT},
+      teacherId = #{teacherid,jdbcType=BIGINT},
+      reward = #{reward,jdbcType=DOUBLE},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      subjectId = #{subjectid,jdbcType=INTEGER},
+      counter = #{counter,jdbcType=INTEGER},
+      answered = #{answered,jdbcType=VARCHAR},
+      users_selected = #{usersSelected,jdbcType=VARCHAR}
+    where questionId = #{questionid,jdbcType=BIGINT}
+  </update>
+</mapper>
