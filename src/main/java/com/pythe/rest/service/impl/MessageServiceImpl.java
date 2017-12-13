@@ -295,7 +295,7 @@ public class MessageServiceImpl implements MessageService{
 		params.put("data", data);
 		String params_json= JsonUtils.objectToJson(params);
 		
-		String xw_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+access_token;
+		String xw_url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token="+access_token;
 		String str = HttpClientUtil.doPostJson(xw_url, params_json);
 
 		return PytheResult.ok(str);
