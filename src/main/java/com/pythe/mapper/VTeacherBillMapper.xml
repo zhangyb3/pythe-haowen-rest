@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pythe.mapper.VTeacherBillMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.VTeacherBill" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="teacher_outId" property="teacherOutid" jdbcType="BIGINT" />
+    <result column="student_outId" property="studentOutid" jdbcType="BIGINT" />
+    <result column="teacher_inId" property="teacherInid" jdbcType="BIGINT" />
+    <result column="student_inId" property="studentInid" jdbcType="BIGINT" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="objectId" property="objectid" jdbcType="BIGINT" />
+    <result column="operationType" property="operationtype" jdbcType="VARCHAR" />
+    <result column="operationTime" property="operationtime" jdbcType="TIMESTAMP" />
+    <result column="pay_id" property="payId" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="paid" property="paid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="userImg" property="userimg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, teacher_outId, student_outId, teacher_inId, student_inId, money, objectId, operationType, 
+    operationTime, pay_id, out_trade_no, paid, username, userImg
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.VTeacherBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from v_teacher_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.VTeacherBillExample" >
+    delete from v_teacher_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pythe.pojo.VTeacherBill" >
+    insert into v_teacher_bill (id, teacher_outId, student_outId, 
+      teacher_inId, student_inId, money, 
+      objectId, operationType, operationTime, 
+      pay_id, out_trade_no, paid, 
+      username, userImg)
+    values (#{id,jdbcType=BIGINT}, #{teacherOutid,jdbcType=BIGINT}, #{studentOutid,jdbcType=BIGINT}, 
+      #{teacherInid,jdbcType=BIGINT}, #{studentInid,jdbcType=BIGINT}, #{money,jdbcType=DOUBLE}, 
+      #{objectid,jdbcType=BIGINT}, #{operationtype,jdbcType=VARCHAR}, #{operationtime,jdbcType=TIMESTAMP}, 
+      #{payId,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{paid,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{userimg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pythe.pojo.VTeacherBill" >
+    insert into v_teacher_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teacherOutid != null" >
+        teacher_outId,
+      </if>
+      <if test="studentOutid != null" >
+        student_outId,
+      </if>
+      <if test="teacherInid != null" >
+        teacher_inId,
+      </if>
+      <if test="studentInid != null" >
+        student_inId,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="objectid != null" >
+        objectId,
+      </if>
+      <if test="operationtype != null" >
+        operationType,
+      </if>
+      <if test="operationtime != null" >
+        operationTime,
+      </if>
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="paid != null" >
+        paid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="userimg != null" >
+        userImg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="teacherOutid != null" >
+        #{teacherOutid,jdbcType=BIGINT},
+      </if>
+      <if test="studentOutid != null" >
+        #{studentOutid,jdbcType=BIGINT},
+      </if>
+      <if test="teacherInid != null" >
+        #{teacherInid,jdbcType=BIGINT},
+      </if>
+      <if test="studentInid != null" >
+        #{studentInid,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="objectid != null" >
+        #{objectid,jdbcType=BIGINT},
+      </if>
+      <if test="operationtype != null" >
+        #{operationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="operationtime != null" >
+        #{operationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="paid != null" >
+        #{paid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userimg != null" >
+        #{userimg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pythe.pojo.VTeacherBillExample" resultType="java.lang.Integer" >
+    select count(*) from v_teacher_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update v_teacher_bill
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherOutid != null" >
+        teacher_outId = #{record.teacherOutid,jdbcType=BIGINT},
+      </if>
+      <if test="record.studentOutid != null" >
+        student_outId = #{record.studentOutid,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherInid != null" >
+        teacher_inId = #{record.teacherInid,jdbcType=BIGINT},
+      </if>
+      <if test="record.studentInid != null" >
+        student_inId = #{record.studentInid,jdbcType=BIGINT},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.objectid != null" >
+        objectId = #{record.objectid,jdbcType=BIGINT},
+      </if>
+      <if test="record.operationtype != null" >
+        operationType = #{record.operationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationtime != null" >
+        operationTime = #{record.operationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payId != null" >
+        pay_id = #{record.payId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outTradeNo != null" >
+        out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paid != null" >
+        paid = #{record.paid,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userimg != null" >
+        userImg = #{record.userimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update v_teacher_bill
+    set id = #{record.id,jdbcType=BIGINT},
+      teacher_outId = #{record.teacherOutid,jdbcType=BIGINT},
+      student_outId = #{record.studentOutid,jdbcType=BIGINT},
+      teacher_inId = #{record.teacherInid,jdbcType=BIGINT},
+      student_inId = #{record.studentInid,jdbcType=BIGINT},
+      money = #{record.money,jdbcType=DOUBLE},
+      objectId = #{record.objectid,jdbcType=BIGINT},
+      operationType = #{record.operationtype,jdbcType=VARCHAR},
+      operationTime = #{record.operationtime,jdbcType=TIMESTAMP},
+      pay_id = #{record.payId,jdbcType=VARCHAR},
+      out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
+      paid = #{record.paid,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      userImg = #{record.userimg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

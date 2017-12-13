@@ -87,7 +87,6 @@ public class QuestionAnswersServiceImpl implements QuestionAnswersService{
 			JSONObject json = new JSONObject();
 			
 			vQuestionAnswersWithBLOBs.setQuestioncontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getQuestioncontent()));
-			vQuestionAnswersWithBLOBs.setAnswercontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getAnswercontent()));
 		//计算时间
 		   long l=(new Date().getTime())-vQuestionAnswersWithBLOBs.getStarttime().getTime();
 
@@ -172,7 +171,6 @@ public class QuestionAnswersServiceImpl implements QuestionAnswersService{
 		List<JSONObject> resultList=new ArrayList<>();
 		for (VQuestionAnswersWithBLOBs vQuestionAnswersWithBLOBs : list) {
 			vQuestionAnswersWithBLOBs.setQuestioncontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getQuestioncontent()));
-			vQuestionAnswersWithBLOBs.setAnswercontent(EmojiParser.parseToUnicode(vQuestionAnswersWithBLOBs.getAnswercontent()));
 			JSONObject json = new JSONObject();
 			
 		//计算时间
@@ -207,6 +205,8 @@ public class QuestionAnswersServiceImpl implements QuestionAnswersService{
 		return PytheResult.ok(resultList);
 	}
 
+	
+	
 	@Override
 	public PytheResult selectQuestionDetail(Long userId, Long questionId) {
 		// TODO Auto-generated method stub

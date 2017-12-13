@@ -254,7 +254,7 @@ public class MessageServiceImpl implements MessageService{
 		
 		SortedMap<String, String> params = new TreeMap<String, String>();
 		params.put("touser", student.getOpenid());
-		params.put("template_id","8ArqeWXorJzDU83fc3ZDG3SVCX9GnWJw_eajT0Svv8I");// 商品描述
+		params.put("template_id","8ArqeWXorJzDU83fc3ZDGwAyVIzs3rMuiOV4ZeE7ujE");// 商品描述
 		System.out.println(bill.getPayId());
 		params.put("form_id", bill.getPayId());
 		

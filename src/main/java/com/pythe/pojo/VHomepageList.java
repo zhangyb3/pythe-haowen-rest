@@ -15,12 +15,6 @@ public class VHomepageList {
 
     private Long likesnum;
 
-    private Long knowledgeid;
-
-    private String level2;
-
-    private String knowledge;
-
     private Long userid;
 
     private Integer gradeid;
@@ -81,30 +75,6 @@ public class VHomepageList {
 
     public void setLikesnum(Long likesnum) {
         this.likesnum = likesnum;
-    }
-
-    public Long getKnowledgeid() {
-        return knowledgeid;
-    }
-
-    public void setKnowledgeid(Long knowledgeid) {
-        this.knowledgeid = knowledgeid;
-    }
-
-    public String getLevel2() {
-        return level2;
-    }
-
-    public void setLevel2(String level2) {
-        this.level2 = level2 == null ? null : level2.trim();
-    }
-
-    public String getKnowledge() {
-        return knowledge;
-    }
-
-    public void setKnowledge(String knowledge) {
-        this.knowledge = knowledge == null ? null : knowledge.trim();
     }
 
     public Long getUserid() {

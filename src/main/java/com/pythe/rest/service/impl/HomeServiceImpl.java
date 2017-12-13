@@ -107,9 +107,10 @@ public class HomeServiceImpl implements HomeService{
 	    	for(VHomepageListWithBLOBs result: results)
 	    	{
 	    		result.setTeachername(EmojiParser.parseToUnicode(result.getTeachername()));
-				result.setStudentname(EmojiParser.parseToUnicode(result.getStudentname()));
+				result.setStudentname(EmojiParser.parseToUnicode(result.getStudentname()));		
+				result.setAnswercontent(EmojiParser.parseToUnicode(result.getAnswercontent()));
+				result.setQuestioncontent(EmojiParser.parseToUnicode(result.getQuestioncontent()));
 	    	}
-	    	
 			return results;
 		}
 	    //根据gradeId给学生返回数据
@@ -118,6 +119,8 @@ public class HomeServiceImpl implements HomeService{
     	{
     		result.setTeachername(EmojiParser.parseToUnicode(result.getTeachername()));
 			result.setStudentname(EmojiParser.parseToUnicode(result.getStudentname()));
+			result.setAnswercontent(EmojiParser.parseToUnicode(result.getAnswercontent()));
+			result.setQuestioncontent(EmojiParser.parseToUnicode(result.getQuestioncontent()));
     	}
     	
 		return results;
@@ -139,16 +142,15 @@ public class HomeServiceImpl implements HomeService{
 	@Override
 	public PytheResult selectKnowledgeOrQuestionContent(String query, Long userId, Integer pageNum, Integer pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
-    	VHomepageListExample example = new VHomepageListExample();
-    	example.createCriteria().andKnowledgeLike("%" + query + "%");
     	
-    	List<VHomepageListWithBLOBs> results = homeMapper.selectByExampleWithBLOBs(example);
+    	List<VHomepageListWithBLOBs> results = homeMapper.selectKnowledgeOrQuestionContent(query);
     	for(VHomepageListWithBLOBs record: results)
     	{
     		record.setStudentname(EmojiParser.parseToUnicode(record.getStudentname()));
 	    	record.setTeachername(EmojiParser.parseToUnicode(record.getTeachername()));
+	    	record.setAnswercontent(EmojiParser.parseToUnicode(record.getAnswercontent()));
+	    	record.setQuestioncontent(EmojiParser.parseToUnicode(record.getQuestioncontent()));
     	}
-    	
 		return PytheResult.ok(results);
 	}
 

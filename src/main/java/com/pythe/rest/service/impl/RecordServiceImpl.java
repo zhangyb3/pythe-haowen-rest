@@ -21,8 +21,10 @@ import com.pythe.common.utils.Xml2JsonUtil;
 import com.pythe.mapper.TblBillMapper;
 import com.pythe.mapper.TblUserMapper;
 import com.pythe.mapper.VHomepageListMapper;
+import com.pythe.mapper.VStudentBillMapper;
 import com.pythe.mapper.VStudentMapper;
 import com.pythe.mapper.VStudentStatisticsMapper;
+import com.pythe.mapper.VTeacherBillMapper;
 import com.pythe.mapper.VTeacherStatisticsMapper;
 import com.pythe.pojo.TblBill;
 import com.pythe.pojo.TblBillExample;
@@ -30,9 +32,14 @@ import com.pythe.pojo.TblUserExample;
 import com.pythe.pojo.TblUserWithBLOBs;
 import com.pythe.pojo.VHomepageListExample;
 import com.pythe.pojo.VHomepageListWithBLOBs;
+import com.pythe.pojo.VStudentBill;
+import com.pythe.pojo.VStudentBillExample;
 import com.pythe.pojo.VStudentExample;
 import com.pythe.pojo.VStudentStatisticsExample;
 import com.pythe.pojo.VStudentWithBLOBs;
+import com.pythe.pojo.VTeacherBill;
+import com.pythe.pojo.VTeacherBillExample;
+import com.pythe.pojo.VTeacherExample;
 import com.pythe.pojo.VTeacherStatisticsExample;
 import com.pythe.rest.service.RecordService;
 import com.pythe.rest.service.TransferService;
@@ -60,12 +67,17 @@ public class RecordServiceImpl implements RecordService {
 	@Autowired
 	private VHomepageListMapper homeMapper;
 	
+	
+	@Autowired
+	private VTeacherBillMapper teacherBillMapper;
+	
+	
+	@Autowired
+	private VStudentBillMapper studentBillMapper;
+	
 	@Autowired
 	private TblBillMapper billMapper;
 	
-	@Autowired
-	private VStudentMapper studentMapper;
-
 	@Autowired
 	private TblUserMapper userMapper;
 	
@@ -117,12 +129,10 @@ public class RecordServiceImpl implements RecordService {
 	public PytheResult teacherQueryBills(Long teacherId, Integer pageNum, Integer pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		
-//		TblBillExample billExample = new TblBillExample();
-//		billExample.createCriteria().andTeacherInidEqualTo(teacherId)//.andOperationtypeEqualTo("answer question");
-//		;
-//		List<TblBill> bills = billMapper.selectByExample(billExample);
+		VTeacherBillExample example = new VTeacherBillExample();
+		example.createCriteria().andTeacherInidEqualTo(teacherId);
+		List<VTeacherBill> bills = teacherBillMapper.selectByExample(example);
 		
-		List<TblBill> bills = billMapper.selectTeacherAllDESC(teacherId);
 		
 		if(bills.isEmpty())
 		{
@@ -130,28 +140,14 @@ public class RecordServiceImpl implements RecordService {
 		}
 		
 		List<JSONObject> list = new ArrayList<JSONObject>();
-		for(TblBill bill:bills)
+		for(VTeacherBill bill:bills)
 		{
 			JSONObject json = new JSONObject();
 			json.put("bill", bill);
 			json.put("money", bill.getMoney());
 			json.put("operationTime", bill.getOperationtime());
-			
-//			VStudentExample studentExample = new VStudentExample();
-			TblUserExample studentExample = new TblUserExample();
-			studentExample.createCriteria().andUseridEqualTo(bill.getStudentOutid());
-			List<TblUserWithBLOBs> students = userMapper.selectByExampleWithBLOBs(studentExample);
-			if(students.isEmpty())
-			{
-				json.put("student", null);
-			}
-			else
-			{
-				TblUserWithBLOBs student = students.get(0);
-
-				json.put("studentName", EmojiParser.parseToUnicode(student.getUsername()));
-				json.put("studentAvatar", student.getUserimg());
-			}
+			json.put("studentName", EmojiParser.parseToUnicode(bill.getUsername()));
+			json.put("studentAvatar", bill.getUserimg());
 			
 			list.add(json);
 		}
@@ -198,37 +194,23 @@ public class RecordServiceImpl implements RecordService {
 
 	@Override
 	public PytheResult studentQueryBills(Long studentId, Integer pageNum, Integer pageSize) {
-		
-		List<TblBill> bills = billMapper.selectStudentAllDESC(studentId);
+		VStudentBillExample example = new VStudentBillExample();
+		example.createCriteria().andStudentOutidEqualTo(studentId);
+		 List<VStudentBill> bills = studentBillMapper.selectByExample(example);
 		
 		if(bills.isEmpty())
 		{
 			return PytheResult.build(400, "尚无消费");
 		}
-		
 		List<JSONObject> list = new ArrayList<JSONObject>();
-		for(TblBill bill:bills)
+		for(VStudentBill bill:bills)
 		{
 			JSONObject json = new JSONObject();
 			json.put("bill", bill);
 			json.put("money", bill.getMoney());
 			json.put("operationTime", bill.getOperationtime());
-			
-			TblUserExample teacherExample = new TblUserExample();
-			teacherExample.createCriteria().andUseridEqualTo(bill.getTeacherInid());
-			List<TblUserWithBLOBs> teachers = userMapper.selectByExampleWithBLOBs(teacherExample);
-			if(teachers.isEmpty())
-			{
-				json.put("teacher", null);
-			}
-			else
-			{
-				TblUserWithBLOBs teacher = teachers.get(0);
-
-				json.put("teacherName", EmojiParser.parseToUnicode(teacher.getUsername()));
-				json.put("teacherAvatar", teacher.getUserimg());
-			}
-			
+			json.put("studentName", EmojiParser.parseToUnicode(bill.getUsername()));
+			json.put("studentAvatar", bill.getUserimg());
 			list.add(json);
 		}
 		

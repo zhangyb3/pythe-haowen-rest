@@ -309,19 +309,16 @@ public class UserServiceImpl implements UserService {
 		
 		PageHelper.startPage(pageNum, pageSize);
 		
-//		TblQuestionExample example = new TblQuestionExample();
-//		example.createCriteria().andQuestionidIn(collection.getQuestions());
-//		
-//		return questionMapper.selectByExampleWithBLOBs(example);
-		
 		VHomepageListExample example = new VHomepageListExample();
     	example.createCriteria().andQuestionidIn(collection.getQuestions());
-    	
     	List<VHomepageListWithBLOBs> results = homeMapper.selectByExampleWithBLOBs(example);
     	for(VHomepageListWithBLOBs record: results)
     	{
     		record.setStudentname(EmojiParser.parseToUnicode(record.getStudentname()));
 	    	record.setTeachername(EmojiParser.parseToUnicode(record.getTeachername()));
+	    	record.setAnswercontent(EmojiParser.parseToUnicode(record.getAnswercontent()));
+	    	record.setQuestioncontent(EmojiParser.parseToUnicode(record.getQuestioncontent()));
+	    	
     	}
 		return PytheResult.ok(results);
 	}

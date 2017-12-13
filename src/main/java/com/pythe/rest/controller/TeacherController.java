@@ -1,7 +1,6 @@
 package com.pythe.rest.controller;
 
 
-import java.net.URLDecoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +41,6 @@ public class TeacherController {
 				@RequestParam(required = true,value = "teacherId")Long teacherId
 				){
 	    	try {
-
 				return service.updateLikesByTeacherId(userId,teacherId);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -83,9 +81,7 @@ public class TeacherController {
 			  @RequestBody String parameters
 		)
 	  {
-		  
     	try {
-    		parameters = URLDecoder.decode(parameters, "UTF-8");
     		JSONObject json = JSONObject.parseObject(parameters);
     		String orgName = json.getString("orgName");
     		String orgDescription = json.getString("description");
@@ -112,10 +108,7 @@ public class TeacherController {
 			  @RequestParam(required = true,value = "orgId")Long orgId
 		)
 	  {
-		  
     	try {
-    		
-    		
 			return orgService.orgQueryTeacher(orgId,teacherPhone);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,7 +116,6 @@ public class TeacherController {
 		}
 	  }
 	  
-  
     
 	  /**
 	   * 编辑
@@ -137,8 +129,6 @@ public class TeacherController {
 	  {
 		  
     	try {
-    		
-    		
 			return orgService.addOrgTeacher(orgId,teacherId);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -179,7 +169,7 @@ public class TeacherController {
 	  public PytheResult  teacherQueryBills(
 			  @RequestParam(required = true,value = "teacherId")Long teacherId,
 			  @RequestParam(defaultValue="1") Integer pageNum,
-			  @RequestParam(defaultValue="10") Integer pageSize
+			  @RequestParam(defaultValue="20") Integer pageSize
 			  
 		)
 	  {

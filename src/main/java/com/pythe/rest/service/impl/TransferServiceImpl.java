@@ -150,7 +150,6 @@ public class TransferServiceImpl implements TransferService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("=====================>"+str);
 
 		return str;
 	}

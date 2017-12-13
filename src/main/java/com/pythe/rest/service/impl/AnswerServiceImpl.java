@@ -34,6 +34,7 @@ import com.pythe.pojo.VQuestionAnswersExample;
 import com.pythe.pojo.VQuestionExample;
 import com.pythe.rest.service.AnswerService;
 import com.vdurmont.emoji.EmojiParser;
+import com.vdurmont.emoji.EmojiParser.FitzpatrickAction;
 import com.pythe.rest.dao.JedisClient;
 
 
@@ -225,8 +226,7 @@ public class AnswerServiceImpl implements AnswerService{
 		answer.setKnowledgeid(knowledgeId);
 		answer.setStudentid(studentId);
 		answer.setTeacherid(teacherId);
-		
-		answer.setAnswercontent(EmojiParser.parseToUnicode(answerContent));
+		answer.setAnswercontent(EmojiParser.parseToAliases(answerContent, FitzpatrickAction.PARSE));
 		answer.setAnswertime(new Date());
 		answer.setFee(0d);
 		answer.setLikesnum(0l);
@@ -285,7 +285,7 @@ public class AnswerServiceImpl implements AnswerService{
 	@Override
 	public List<TblKnowledge> selectKnowledgeList(Integer subjectId,Long studentId) {
 		// 1001语文，1002数学，1003英语
-		
+		//
 	    TblUserExample example = new TblUserExample();
 		Integer gradeId =userMapper.selectByExample(example).get(0).getGradeid();
 		Integer phase = gradeId/100;

@@ -1,6 +1,5 @@
 package com.pythe.rest.controller;
 
-import java.net.URLDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pythe.common.pojo.PytheResult;
 import com.pythe.common.utils.ExceptionUtil;
-import com.pythe.mapper.VQuestionAnswersMapper;
 import com.pythe.rest.service.AnswerService;
 import com.pythe.rest.service.QuestionAnswersService;
 
@@ -128,11 +126,9 @@ public class AnswerController {
 	 * 注意：出现乱码
 	 * @return
 	 */
-	@RequestMapping(value = "/answer/insert/", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE
-			+ ";charset=utf-8")
+	@RequestMapping(value = "/answer/insert/", method = RequestMethod.POST)
 	@ResponseBody
 	public PytheResult insertAnswer(@RequestBody String url) throws Exception {
-
 
 		try {
 			return PytheResult.ok(service.insertAnswer(url));
@@ -142,6 +138,8 @@ public class AnswerController {
 		}
 	}
     
+	
+	
 	
 	/**
 	 * 选择一级知识点列表
@@ -178,7 +176,6 @@ public class AnswerController {
     	}
     }
     
-    
     /**
      * 老师的已答和未答列表
      */
@@ -186,6 +183,8 @@ public class AnswerController {
      * 我答:未答列表
      * @param teacherId
      * @return
+     * 
+     * 
      */
     @RequestMapping(value = "/teacher/answer/isnot", method = RequestMethod.GET)
 	@ResponseBody
@@ -199,6 +198,8 @@ public class AnswerController {
 			return PytheResult.build(500, ExceptionUtil.getStackTrace(e));
 		}
 	}
+    
+    
     
     /**
      * 我答:已答列表
@@ -263,7 +264,7 @@ public class AnswerController {
     
     
     /**
-     * 查看我答的答案详情
+     * 查看答案详情
      * @return
      */
     @RequestMapping(value = "/answer/detail", method = RequestMethod.GET)

@@ -193,7 +193,6 @@
       generate_time = #{generateTime,jdbcType=TIMESTAMP}
     where userId = #{userid,jdbcType=BIGINT}
   </update>
-  
     <update id="paymentOrderScan" parameterType="Date">
 		CALL pr_status2(#{date});
 	</update>

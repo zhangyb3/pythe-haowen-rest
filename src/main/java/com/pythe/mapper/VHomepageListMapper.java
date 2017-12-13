@@ -30,5 +30,6 @@ public interface VHomepageListMapper {
    	List<VHomepageListWithBLOBs> selectListByGradeIdAndSubject(@Param("gradeId") Integer gradeId,@Param("subjectId") Integer subjectId);
 
    	List<VHomepageListWithBLOBs> selectListByFeeAndLikesNum(Integer gradeId);
-   	
+
+	List<VHomepageListWithBLOBs> selectKnowledgeOrQuestionContent(String query);
 }

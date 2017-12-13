@@ -132,7 +132,6 @@ public class HomeController {
 			@RequestParam(defaultValue="-1") Long userId
 			) {
     	try {
-
 			return service.selectListByQuestionId(questionId,userId);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,7 +154,6 @@ public class HomeController {
 			@RequestParam(defaultValue="1") Integer pageNum,
 			@RequestParam(defaultValue="10") Integer pageSize) {
     	try {
-    		System.out.println("==========================>" + query);
     		query = URLDecoder.decode(query, "UTF-8");
 			return service.selectKnowledgeOrQuestionContent(query,userId,pageNum,pageSize);
 		} catch (Exception e) {
@@ -163,7 +161,6 @@ public class HomeController {
 			return PytheResult.build(500, ExceptionUtil.getStackTrace(e));
 		}
 	}
-    
     
     
     @RequestMapping(value = "/index/search/organization", method = RequestMethod.GET)
@@ -174,8 +171,6 @@ public class HomeController {
   			@RequestParam(defaultValue="1") Integer pageNum,
   			@RequestParam(defaultValue="10") Integer pageSize) {
       	try {
-      		System.out.println("==========================>" + query);
-      		query = URLDecoder.decode(query, "UTF-8");
   			return service.selectListByOrganization(query,userId,pageNum,pageSize);
   		} catch (Exception e) {
   			e.printStackTrace();
@@ -193,8 +188,6 @@ public class HomeController {
   			@RequestParam(defaultValue="1") Integer pageNum,
   			@RequestParam(defaultValue="10") Integer pageSize) {
       	try {
-      		System.out.println("==========================>" + query);
-      		query = URLDecoder.decode(query, "UTF-8");
   			return service.selectListByTeacher(query,userId,subjectId,pageNum,pageSize);
   		} catch (Exception e) {
   			e.printStackTrace();

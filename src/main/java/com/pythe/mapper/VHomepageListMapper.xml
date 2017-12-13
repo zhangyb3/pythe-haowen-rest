@@ -8,9 +8,6 @@
     <result column="answerTime" property="answertime" jdbcType="TIMESTAMP" />
     <result column="answerId" property="answerid" jdbcType="BIGINT" />
     <result column="likesNum" property="likesnum" jdbcType="BIGINT" />
-    <result column="knowledgeId" property="knowledgeid" jdbcType="BIGINT" />
-    <result column="level2" property="level2" jdbcType="VARCHAR" />
-    <result column="knowledge" property="knowledge" jdbcType="VARCHAR" />
     <result column="userId" property="userid" jdbcType="BIGINT" />
     <result column="gradeId" property="gradeid" jdbcType="INTEGER" />
     <result column="studentName" property="studentname" jdbcType="VARCHAR" />
@@ -82,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    questionId, subjectId, reward, answerTime, answerId, likesNum, knowledgeId, level2, 
-    knowledge, userId, gradeId, studentName, studentImg, rewardNum, teacherImg, teacherName
+    questionId, subjectId, reward, answerTime, answerId, likesNum, userId, gradeId, studentName, 
+    studentImg, rewardNum, teacherImg, teacherName
   </sql>
   <sql id="Blob_Column_List" >
     questionContent, answerContent
@@ -127,14 +124,12 @@
   <insert id="insert" parameterType="com.pythe.pojo.VHomepageListWithBLOBs" >
     insert into v_homepage_list (questionId, subjectId, reward, 
       answerTime, answerId, likesNum, 
-      knowledgeId, level2, knowledge, 
       userId, gradeId, studentName, 
       studentImg, rewardNum, teacherImg, 
       teacherName, questionContent, answerContent
       )
     values (#{questionid,jdbcType=BIGINT}, #{subjectid,jdbcType=INTEGER}, #{reward,jdbcType=DOUBLE}, 
       #{answertime,jdbcType=TIMESTAMP}, #{answerid,jdbcType=BIGINT}, #{likesnum,jdbcType=BIGINT}, 
-      #{knowledgeid,jdbcType=BIGINT}, #{level2,jdbcType=VARCHAR}, #{knowledge,jdbcType=VARCHAR}, 
       #{userid,jdbcType=BIGINT}, #{gradeid,jdbcType=INTEGER}, #{studentname,jdbcType=VARCHAR}, 
       #{studentimg,jdbcType=VARCHAR}, #{rewardnum,jdbcType=DOUBLE}, #{teacherimg,jdbcType=VARCHAR}, 
       #{teachername,jdbcType=VARCHAR}, #{questioncontent,jdbcType=LONGVARCHAR}, #{answercontent,jdbcType=LONGVARCHAR}
@@ -160,15 +155,6 @@
       </if>
       <if test="likesnum != null" >
         likesNum,
-      </if>
-      <if test="knowledgeid != null" >
-        knowledgeId,
-      </if>
-      <if test="level2 != null" >
-        level2,
-      </if>
-      <if test="knowledge != null" >
-        knowledge,
       </if>
       <if test="userid != null" >
         userId,
@@ -216,15 +202,6 @@
       </if>
       <if test="likesnum != null" >
         #{likesnum,jdbcType=BIGINT},
-      </if>
-      <if test="knowledgeid != null" >
-        #{knowledgeid,jdbcType=BIGINT},
-      </if>
-      <if test="level2 != null" >
-        #{level2,jdbcType=VARCHAR},
-      </if>
-      <if test="knowledge != null" >
-        #{knowledge,jdbcType=VARCHAR},
       </if>
       <if test="userid != null" >
         #{userid,jdbcType=BIGINT},
@@ -282,15 +259,6 @@
       <if test="record.likesnum != null" >
         likesNum = #{record.likesnum,jdbcType=BIGINT},
       </if>
-      <if test="record.knowledgeid != null" >
-        knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
-      </if>
-      <if test="record.level2 != null" >
-        level2 = #{record.level2,jdbcType=VARCHAR},
-      </if>
-      <if test="record.knowledge != null" >
-        knowledge = #{record.knowledge,jdbcType=VARCHAR},
-      </if>
       <if test="record.userid != null" >
         userId = #{record.userid,jdbcType=BIGINT},
       </if>
@@ -331,9 +299,6 @@
       answerTime = #{record.answertime,jdbcType=TIMESTAMP},
       answerId = #{record.answerid,jdbcType=BIGINT},
       likesNum = #{record.likesnum,jdbcType=BIGINT},
-      knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
-      level2 = #{record.level2,jdbcType=VARCHAR},
-      knowledge = #{record.knowledge,jdbcType=VARCHAR},
       userId = #{record.userid,jdbcType=BIGINT},
       gradeId = #{record.gradeid,jdbcType=INTEGER},
       studentName = #{record.studentname,jdbcType=VARCHAR},
@@ -355,9 +320,6 @@
       answerTime = #{record.answertime,jdbcType=TIMESTAMP},
       answerId = #{record.answerid,jdbcType=BIGINT},
       likesNum = #{record.likesnum,jdbcType=BIGINT},
-      knowledgeId = #{record.knowledgeid,jdbcType=BIGINT},
-      level2 = #{record.level2,jdbcType=VARCHAR},
-      knowledge = #{record.knowledge,jdbcType=VARCHAR},
       userId = #{record.userid,jdbcType=BIGINT},
       gradeId = #{record.gradeid,jdbcType=INTEGER},
       studentName = #{record.studentname,jdbcType=VARCHAR},
@@ -370,7 +332,7 @@
     </if>
   </update>
   
-    <select id="selectDefaultListByGradeId" parameterType="Integer" resultType="com.pythe.pojo.VHomepageListWithBLOBs"> 
+   <select id="selectDefaultListByGradeId" parameterType="Integer" resultType="com.pythe.pojo.VHomepageListWithBLOBs"> 
 			(SELECT * FROM v_homepage_list WHERE  gradeId =#{gradeId}) 
 			UNION
 			(SELECT * FROM v_homepage_list)
@@ -389,5 +351,13 @@
 			UNION
 			(SELECT * FROM v_homepage_list ORDER BY likesNum DESC)
 	</select>
+  
+  
+  	<select id="selectKnowledgeOrQuestionContent" parameterType="String" resultType="com.pythe.pojo.VHomepageListWithBLOBs"> 
+		SELECT * FROM v_homepage_list WHERE  questionContent like CONCAT('%',#{query},'%')
+	</select>
 	
+	
+  
+  
 </mapper>

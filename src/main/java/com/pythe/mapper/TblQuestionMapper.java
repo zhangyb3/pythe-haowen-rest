@@ -2,6 +2,8 @@ package com.pythe.mapper;
 
 import com.pythe.pojo.TblQuestion;
 import com.pythe.pojo.TblQuestionExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +35,6 @@ public interface TblQuestionMapper {
     int updateByPrimaryKeyWithBLOBs(TblQuestion record);
 
     int updateByPrimaryKey(TblQuestion record);
+
+	List<TblQuestion> selectQuestionStatusEqualsOne();
 }

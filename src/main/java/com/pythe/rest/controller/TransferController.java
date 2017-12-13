@@ -138,7 +138,6 @@ public class TransferController {
 	public PytheResult refundByOrder(@RequestBody String url) throws Exception {
 	
 
-		url = URLDecoder.decode(url, "UTF-8");
 		try {
 			return PytheResult.ok(transferService.refundByOrder(url));
 		} catch (Exception e) {
