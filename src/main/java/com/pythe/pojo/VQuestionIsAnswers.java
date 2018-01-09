@@ -2,12 +2,20 @@ package com.pythe.pojo;
 
 import java.util.Date;
 
-public class VHomepageList {
-    private Long questionid;
-
+public class VQuestionIsAnswers {
     private Integer subjectid;
 
+    private Long questionid;
+
+    private Integer status;
+
     private Double reward;
+
+    private Long studentid;
+
+    private Date starttime;
+
+    private Date endtime;
 
     private Date answertime;
 
@@ -15,25 +23,17 @@ public class VHomepageList {
 
     private Long likesnum;
 
-    private Integer gradeid;
+    private Double rewardnum;
 
     private String studentname;
 
     private String studentimg;
 
-    private Double rewardnum;
+    private String teachername;
 
     private String teacherimg;
 
-    private String teachername;
-
-    public Long getQuestionid() {
-        return questionid;
-    }
-
-    public void setQuestionid(Long questionid) {
-        this.questionid = questionid;
-    }
+    private Long teacherid;
 
     public Integer getSubjectid() {
         return subjectid;
@@ -43,12 +43,52 @@ public class VHomepageList {
         this.subjectid = subjectid;
     }
 
+    public Long getQuestionid() {
+        return questionid;
+    }
+
+    public void setQuestionid(Long questionid) {
+        this.questionid = questionid;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Double getReward() {
         return reward;
     }
 
     public void setReward(Double reward) {
         this.reward = reward;
+    }
+
+    public Long getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(Long studentid) {
+        this.studentid = studentid;
+    }
+
+    public Date getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(Date starttime) {
+        this.starttime = starttime;
+    }
+
+    public Date getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
     }
 
     public Date getAnswertime() {
@@ -75,12 +115,12 @@ public class VHomepageList {
         this.likesnum = likesnum;
     }
 
-    public Integer getGradeid() {
-        return gradeid;
+    public Double getRewardnum() {
+        return rewardnum;
     }
 
-    public void setGradeid(Integer gradeid) {
-        this.gradeid = gradeid;
+    public void setRewardnum(Double rewardnum) {
+        this.rewardnum = rewardnum;
     }
 
     public String getStudentname() {
@@ -99,12 +139,12 @@ public class VHomepageList {
         this.studentimg = studentimg == null ? null : studentimg.trim();
     }
 
-    public Double getRewardnum() {
-        return rewardnum;
+    public String getTeachername() {
+        return teachername;
     }
 
-    public void setRewardnum(Double rewardnum) {
-        this.rewardnum = rewardnum;
+    public void setTeachername(String teachername) {
+        this.teachername = teachername == null ? null : teachername.trim();
     }
 
     public String getTeacherimg() {
@@ -115,11 +155,11 @@ public class VHomepageList {
         this.teacherimg = teacherimg == null ? null : teacherimg.trim();
     }
 
-    public String getTeachername() {
-        return teachername;
+    public Long getTeacherid() {
+        return teacherid;
     }
 
-    public void setTeachername(String teachername) {
-        this.teachername = teachername == null ? null : teachername.trim();
+    public void setTeacherid(Long teacherid) {
+        this.teacherid = teacherid;
     }
 }

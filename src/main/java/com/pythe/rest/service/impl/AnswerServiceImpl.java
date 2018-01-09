@@ -233,18 +233,17 @@ public class AnswerServiceImpl implements AnswerService{
 		answer.setRewardnum(rewardNum);
 		//更新答案
 		mapper.insert(answer);
-		
 		//更新questionId的counter,当counter==0时候，就变掉状态，让别人无法答了。
 		//先查quesiton
 		TblQuestion question = questionMapper.selectByPrimaryKey(questionId);
 		//更新question_updated
-		TblQuestion question_updated = new TblQuestion();
-		question_updated.setQuestionid(questionId);
 		List<Long> answeredList = JSONObject.parseArray(question.getAnswered(), Long.class);
 		answeredList.add(teacherId);
-		question_updated.setAnswered(JsonUtils.objectToJson(answeredList));
-		question_updated.setStatus(QUESTION_SOLVED_STATUS);
-		questionMapper.updateByPrimaryKeySelective(question_updated);
+		question.setAnswered(JsonUtils.objectToJson(answeredList));
+		question.setStatus(QUESTION_SOLVED_STATUS);
+		question.setEndtime(new Date());
+		
+		questionMapper.updateByPrimaryKeySelective(question);
 		
 		TblUserWithBLOBs teacher = userMapper.selectByPrimaryKey(teacherId);
 		List<Long> questionList = JSONObject.parseArray(teacher.getSolved(), Long.class);
@@ -270,9 +269,7 @@ public class AnswerServiceImpl implements AnswerService{
 		{
 			return PytheResult.build(500, "账单无付款纪录");
 		}
-		
-		
-		return PytheResult.ok("插入成功");
+		return PytheResult.build(200,"插入成功",answer.getAnswerid());
 	}
 	
 

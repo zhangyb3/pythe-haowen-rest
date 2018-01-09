@@ -29,7 +29,6 @@ public interface VQuestionAnswersMapper {
 
 	List<VQuestionAnswersWithBLOBs> selectIsNotAnswerListByTeacherId(Long teacherId);
 	
-	
 	List<VQuestionAnswersWithBLOBs> selectIsAnswerListByStudentId(Long studentId);
 
 	List<VQuestionAnswersWithBLOBs> selectIsNotAnswerListByStudentId(Long studentId);

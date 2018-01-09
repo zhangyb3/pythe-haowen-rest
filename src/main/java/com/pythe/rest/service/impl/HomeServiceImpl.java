@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pythe.common.pojo.PytheResult;
 import com.pythe.common.utils.JsonUtils;
 import com.pythe.mapper.TblOrganizationMapper;
@@ -101,29 +103,37 @@ public class HomeServiceImpl implements HomeService{
 	public List<VHomepageListWithBLOBs> selectDefaultListByGradeId(Integer gradeId,Integer pageNum,Integer pageSize) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(pageNum, pageSize);
-	    if (gradeId==-1) {
-	    	VHomepageListExample example = new VHomepageListExample();
-	    	List<VHomepageListWithBLOBs> results = homeMapper.selectByExampleWithBLOBs(example);
-	    	for(VHomepageListWithBLOBs result: results)
-	    	{
-	    		result.setTeachername(EmojiParser.parseToUnicode(result.getTeachername()));
-				result.setStudentname(EmojiParser.parseToUnicode(result.getStudentname()));		
-				result.setAnswercontent(EmojiParser.parseToUnicode(result.getAnswercontent()));
-				result.setQuestioncontent(EmojiParser.parseToUnicode(result.getQuestioncontent()));
-	    	}
-			return results;
-		}
-	    //根据gradeId给学生返回数据
-        List<VHomepageListWithBLOBs> results = homeMapper.selectDefaultListByGradeId(gradeId);
+		
+		VHomepageListExample example = new VHomepageListExample();
+//		if (gradeId !=-1) {
+//			example.createCriteria().andGradeidEqualTo(gradeId);
+//		}
+		//new PageInfo<>(results).getPages()
+		
+    	List<VHomepageListWithBLOBs> results = homeMapper.selectByExampleWithBLOBs(example);
+    	
     	for(VHomepageListWithBLOBs result: results)
     	{
     		result.setTeachername(EmojiParser.parseToUnicode(result.getTeachername()));
-			result.setStudentname(EmojiParser.parseToUnicode(result.getStudentname()));
+			result.setStudentname(EmojiParser.parseToUnicode(result.getStudentname()));		
 			result.setAnswercontent(EmojiParser.parseToUnicode(result.getAnswercontent()));
 			result.setQuestioncontent(EmojiParser.parseToUnicode(result.getQuestioncontent()));
     	}
-    	
 		return results;
+//	    if (gradeId==-1) {
+//
+//		}
+	    //根据gradeId给学生返回数据
+//        List<VHomepageListWithBLOBs> results = homeMapper.selectDefaultListByGradeId(gradeId);
+//    	for(VHomepageListWithBLOBs result: results)
+//    	{
+//    		result.setTeachername(EmojiParser.parseToUnicode(result.getTeachername()));
+//			result.setStudentname(EmojiParser.parseToUnicode(result.getStudentname()));
+//			result.setAnswercontent(EmojiParser.parseToUnicode(result.getAnswercontent()));
+//			result.setQuestioncontent(EmojiParser.parseToUnicode(result.getQuestioncontent()));
+//    	}
+    	
+//		return results;
 	}
 
 

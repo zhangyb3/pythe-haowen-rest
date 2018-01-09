@@ -25,6 +25,7 @@ public interface VHomepageListMapper {
 
     int updateByExample(@Param("record") VHomepageList record, @Param("example") VHomepageListExample example);
     
+    
     List<VHomepageListWithBLOBs> selectDefaultListByGradeId(Integer gradeId);
 
    	List<VHomepageListWithBLOBs> selectListByGradeIdAndSubject(@Param("gradeId") Integer gradeId,@Param("subjectId") Integer subjectId);

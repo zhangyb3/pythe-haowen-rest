@@ -32,7 +32,6 @@ public class AnswerController {
      *点赞
      * @param string
      * @return  localhost:8081/rest/likesnum?answerId=2&userId=1&questionId=3
-     * 
      * Long userId, Long questionId, Long answerId
      */
     @RequestMapping(value="/likesnum", method=RequestMethod.GET)
@@ -75,6 +74,7 @@ public class AnswerController {
     }
     
     
+
 //    /**
 //     * 答的列表
 //     * 过来掉超时并且没有打完的
@@ -139,8 +139,6 @@ public class AnswerController {
 	}
     
 	
-	
-	
 	/**
 	 * 选择一级知识点列表
 	 * @param subjectId 该参数是科目的ID,由问题者发出
@@ -159,7 +157,6 @@ public class AnswerController {
     }
     
     
-	
 	/**
 	 * 点击一级列表然后选择二级知识点列表
 	 * @param level1
@@ -168,7 +165,6 @@ public class AnswerController {
 	@ResponseBody
 	public PytheResult selectKnowledgeList(@RequestParam("level1")String level1){
     	try {
-    		
     		return PytheResult.ok(service.selectSecondKnowledgeList(level1));
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -183,8 +179,6 @@ public class AnswerController {
      * 我答:未答列表
      * @param teacherId
      * @return
-     * 
-     * 
      */
     @RequestMapping(value = "/teacher/answer/isnot", method = RequestMethod.GET)
 	@ResponseBody

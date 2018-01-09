@@ -292,7 +292,9 @@ public class MessageServiceImpl implements MessageService{
 		String data = JsonUtils.objectToJson(data_map);
 		System.out.println(data);
 		
+		//链接到小程序指定页面
 		params.put("data", data);
+		params.put("page", "pages/answer/answer?from=serviceInfo");
 		String params_json= JsonUtils.objectToJson(params);
 		
 		String xw_url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token="+access_token;
@@ -300,11 +302,6 @@ public class MessageServiceImpl implements MessageService{
 
 		return PytheResult.ok(str);
 	}
-
-
-
-
-
 
 
 }

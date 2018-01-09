@@ -2,22 +2,17 @@ package com.pythe.rest.controller;
 
 import java.net.URLDecoder;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.pythe.common.pojo.PytheResult;
 import com.pythe.common.utils.ExceptionUtil;
 import com.pythe.pojo.TblSubject;
 import com.pythe.rest.service.HomeService;
 import com.pythe.rest.service.SubjectService;
-
-
 
 @Controller
 public class HomeController {
@@ -40,8 +35,6 @@ public class HomeController {
 				@RequestParam(defaultValue="-1") Integer gradeId){
 			return subjectService.selectSubjectByPhase(gradeId);
 		}
-    
-    	
     	
 	/**
 	 * 首页科目筛选列表

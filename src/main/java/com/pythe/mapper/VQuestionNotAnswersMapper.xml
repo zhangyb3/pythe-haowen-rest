@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pythe.mapper.VHomepageListMapper" >
-  <resultMap id="BaseResultMap" type="com.pythe.pojo.VHomepageList" >
-    <result column="questionId" property="questionid" jdbcType="BIGINT" />
+<mapper namespace="com.pythe.mapper.VQuestionNotAnswersMapper" >
+  <resultMap id="BaseResultMap" type="com.pythe.pojo.VQuestionNotAnswers" >
     <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+    <result column="questionId" property="questionid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="reward" property="reward" jdbcType="DOUBLE" />
+    <result column="studentId" property="studentid" jdbcType="BIGINT" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="answerTime" property="answertime" jdbcType="TIMESTAMP" />
     <result column="answerId" property="answerid" jdbcType="BIGINT" />
     <result column="likesNum" property="likesnum" jdbcType="BIGINT" />
-    <result column="gradeId" property="gradeid" jdbcType="INTEGER" />
+    <result column="rewardNum" property="rewardnum" jdbcType="DOUBLE" />
     <result column="studentName" property="studentname" jdbcType="VARCHAR" />
     <result column="studentImg" property="studentimg" jdbcType="VARCHAR" />
-    <result column="rewardNum" property="rewardnum" jdbcType="DOUBLE" />
-    <result column="teacherImg" property="teacherimg" jdbcType="VARCHAR" />
     <result column="teacherName" property="teachername" jdbcType="VARCHAR" />
+    <result column="teacherImg" property="teacherimg" jdbcType="VARCHAR" />
+    <result column="teacherId" property="teacherid" jdbcType="BIGINT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.VHomepageListWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pythe.pojo.VQuestionNotAnswersWithBLOBs" extends="BaseResultMap" >
     <result column="questionContent" property="questioncontent" jdbcType="LONGVARCHAR" />
     <result column="answerContent" property="answercontent" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -78,13 +82,14 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    questionId, subjectId, reward, answerTime, answerId, likesNum, gradeId, studentName, 
-    studentImg, rewardNum, teacherImg, teacherName
+    subjectId, questionId, status, reward, studentId, startTime, endTime, answerTime, 
+    answerId, likesNum, rewardNum, studentName, studentImg, teacherName, teacherImg, 
+    teacherId
   </sql>
   <sql id="Blob_Column_List" >
     questionContent, answerContent
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.VHomepageListExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pythe.pojo.VQuestionNotAnswersExample" >
     select
     <if test="distinct" >
       distinct
@@ -92,7 +97,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from v_homepage_list
+    from v_question_not_answers
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,13 +105,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.VHomepageListExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pythe.pojo.VQuestionNotAnswersExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from v_homepage_list
+    from v_question_not_answers
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -114,35 +119,51 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.pythe.pojo.VHomepageListExample" >
-    delete from v_homepage_list
+  <delete id="deleteByExample" parameterType="com.pythe.pojo.VQuestionNotAnswersExample" >
+    delete from v_question_not_answers
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pythe.pojo.VHomepageListWithBLOBs" >
-    insert into v_homepage_list (questionId, subjectId, reward, 
-      answerTime, answerId, likesNum, 
-      gradeId, studentName, studentImg, 
-      rewardNum, teacherImg, teacherName, 
-      questionContent, answerContent)
-    values (#{questionid,jdbcType=BIGINT}, #{subjectid,jdbcType=INTEGER}, #{reward,jdbcType=DOUBLE}, 
-      #{answertime,jdbcType=TIMESTAMP}, #{answerid,jdbcType=BIGINT}, #{likesnum,jdbcType=BIGINT}, 
-      #{gradeid,jdbcType=INTEGER}, #{studentname,jdbcType=VARCHAR}, #{studentimg,jdbcType=VARCHAR}, 
-      #{rewardnum,jdbcType=DOUBLE}, #{teacherimg,jdbcType=VARCHAR}, #{teachername,jdbcType=VARCHAR}, 
-      #{questioncontent,jdbcType=LONGVARCHAR}, #{answercontent,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="com.pythe.pojo.VQuestionNotAnswersWithBLOBs" >
+    insert into v_question_not_answers (subjectId, questionId, status, 
+      reward, studentId, startTime, 
+      endTime, answerTime, answerId, 
+      likesNum, rewardNum, studentName, 
+      studentImg, teacherName, teacherImg, 
+      teacherId, questionContent, answerContent
+      )
+    values (#{subjectid,jdbcType=INTEGER}, #{questionid,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{reward,jdbcType=DOUBLE}, #{studentid,jdbcType=BIGINT}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{answertime,jdbcType=TIMESTAMP}, #{answerid,jdbcType=BIGINT}, 
+      #{likesnum,jdbcType=BIGINT}, #{rewardnum,jdbcType=DOUBLE}, #{studentname,jdbcType=VARCHAR}, 
+      #{studentimg,jdbcType=VARCHAR}, #{teachername,jdbcType=VARCHAR}, #{teacherimg,jdbcType=VARCHAR}, 
+      #{teacherid,jdbcType=BIGINT}, #{questioncontent,jdbcType=LONGVARCHAR}, #{answercontent,jdbcType=LONGVARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.pythe.pojo.VHomepageListWithBLOBs" >
-    insert into v_homepage_list
+  <insert id="insertSelective" parameterType="com.pythe.pojo.VQuestionNotAnswersWithBLOBs" >
+    insert into v_question_not_answers
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="questionid != null" >
-        questionId,
-      </if>
       <if test="subjectid != null" >
         subjectId,
       </if>
+      <if test="questionid != null" >
+        questionId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
       <if test="reward != null" >
         reward,
+      </if>
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
       </if>
       <if test="answertime != null" >
         answerTime,
@@ -153,8 +174,8 @@
       <if test="likesnum != null" >
         likesNum,
       </if>
-      <if test="gradeid != null" >
-        gradeId,
+      <if test="rewardnum != null" >
+        rewardNum,
       </if>
       <if test="studentname != null" >
         studentName,
@@ -162,14 +183,14 @@
       <if test="studentimg != null" >
         studentImg,
       </if>
-      <if test="rewardnum != null" >
-        rewardNum,
+      <if test="teachername != null" >
+        teacherName,
       </if>
       <if test="teacherimg != null" >
         teacherImg,
       </if>
-      <if test="teachername != null" >
-        teacherName,
+      <if test="teacherid != null" >
+        teacherId,
       </if>
       <if test="questioncontent != null" >
         questionContent,
@@ -179,14 +200,26 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="questionid != null" >
-        #{questionid,jdbcType=BIGINT},
-      </if>
       <if test="subjectid != null" >
         #{subjectid,jdbcType=INTEGER},
       </if>
+      <if test="questionid != null" >
+        #{questionid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="reward != null" >
         #{reward,jdbcType=DOUBLE},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=BIGINT},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="answertime != null" >
         #{answertime,jdbcType=TIMESTAMP},
@@ -197,8 +230,8 @@
       <if test="likesnum != null" >
         #{likesnum,jdbcType=BIGINT},
       </if>
-      <if test="gradeid != null" >
-        #{gradeid,jdbcType=INTEGER},
+      <if test="rewardnum != null" >
+        #{rewardnum,jdbcType=DOUBLE},
       </if>
       <if test="studentname != null" >
         #{studentname,jdbcType=VARCHAR},
@@ -206,14 +239,14 @@
       <if test="studentimg != null" >
         #{studentimg,jdbcType=VARCHAR},
       </if>
-      <if test="rewardnum != null" >
-        #{rewardnum,jdbcType=DOUBLE},
+      <if test="teachername != null" >
+        #{teachername,jdbcType=VARCHAR},
       </if>
       <if test="teacherimg != null" >
         #{teacherimg,jdbcType=VARCHAR},
       </if>
-      <if test="teachername != null" >
-        #{teachername,jdbcType=VARCHAR},
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=BIGINT},
       </if>
       <if test="questioncontent != null" >
         #{questioncontent,jdbcType=LONGVARCHAR},
@@ -223,23 +256,35 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pythe.pojo.VHomepageListExample" resultType="java.lang.Integer" >
-    select count(*) from v_homepage_list
+  <select id="countByExample" parameterType="com.pythe.pojo.VQuestionNotAnswersExample" resultType="java.lang.Integer" >
+    select count(*) from v_question_not_answers
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update v_homepage_list
+    update v_question_not_answers
     <set >
-      <if test="record.questionid != null" >
-        questionId = #{record.questionid,jdbcType=BIGINT},
-      </if>
       <if test="record.subjectid != null" >
         subjectId = #{record.subjectid,jdbcType=INTEGER},
       </if>
+      <if test="record.questionid != null" >
+        questionId = #{record.questionid,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
       <if test="record.reward != null" >
         reward = #{record.reward,jdbcType=DOUBLE},
+      </if>
+      <if test="record.studentid != null" >
+        studentId = #{record.studentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.starttime != null" >
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.answertime != null" >
         answerTime = #{record.answertime,jdbcType=TIMESTAMP},
@@ -250,8 +295,8 @@
       <if test="record.likesnum != null" >
         likesNum = #{record.likesnum,jdbcType=BIGINT},
       </if>
-      <if test="record.gradeid != null" >
-        gradeId = #{record.gradeid,jdbcType=INTEGER},
+      <if test="record.rewardnum != null" >
+        rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
       </if>
       <if test="record.studentname != null" >
         studentName = #{record.studentname,jdbcType=VARCHAR},
@@ -259,14 +304,14 @@
       <if test="record.studentimg != null" >
         studentImg = #{record.studentimg,jdbcType=VARCHAR},
       </if>
-      <if test="record.rewardnum != null" >
-        rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      <if test="record.teachername != null" >
+        teacherName = #{record.teachername,jdbcType=VARCHAR},
       </if>
       <if test="record.teacherimg != null" >
         teacherImg = #{record.teacherimg,jdbcType=VARCHAR},
       </if>
-      <if test="record.teachername != null" >
-        teacherName = #{record.teachername,jdbcType=VARCHAR},
+      <if test="record.teacherid != null" >
+        teacherId = #{record.teacherid,jdbcType=BIGINT},
       </if>
       <if test="record.questioncontent != null" >
         questionContent = #{record.questioncontent,jdbcType=LONGVARCHAR},
@@ -280,19 +325,23 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update v_homepage_list
-    set questionId = #{record.questionid,jdbcType=BIGINT},
-      subjectId = #{record.subjectid,jdbcType=INTEGER},
+    update v_question_not_answers
+    set subjectId = #{record.subjectid,jdbcType=INTEGER},
+      questionId = #{record.questionid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
       reward = #{record.reward,jdbcType=DOUBLE},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
       answerTime = #{record.answertime,jdbcType=TIMESTAMP},
       answerId = #{record.answerid,jdbcType=BIGINT},
       likesNum = #{record.likesnum,jdbcType=BIGINT},
-      gradeId = #{record.gradeid,jdbcType=INTEGER},
+      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
       studentName = #{record.studentname,jdbcType=VARCHAR},
       studentImg = #{record.studentimg,jdbcType=VARCHAR},
-      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
-      teacherImg = #{record.teacherimg,jdbcType=VARCHAR},
       teacherName = #{record.teachername,jdbcType=VARCHAR},
+      teacherImg = #{record.teacherimg,jdbcType=VARCHAR},
+      teacherId = #{record.teacherid,jdbcType=BIGINT},
       questionContent = #{record.questioncontent,jdbcType=LONGVARCHAR},
       answerContent = #{record.answercontent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -300,46 +349,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update v_homepage_list
-    set questionId = #{record.questionid,jdbcType=BIGINT},
-      subjectId = #{record.subjectid,jdbcType=INTEGER},
+    update v_question_not_answers
+    set subjectId = #{record.subjectid,jdbcType=INTEGER},
+      questionId = #{record.questionid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
       reward = #{record.reward,jdbcType=DOUBLE},
+      studentId = #{record.studentid,jdbcType=BIGINT},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
       answerTime = #{record.answertime,jdbcType=TIMESTAMP},
       answerId = #{record.answerid,jdbcType=BIGINT},
       likesNum = #{record.likesnum,jdbcType=BIGINT},
-      gradeId = #{record.gradeid,jdbcType=INTEGER},
+      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
       studentName = #{record.studentname,jdbcType=VARCHAR},
       studentImg = #{record.studentimg,jdbcType=VARCHAR},
-      rewardNum = #{record.rewardnum,jdbcType=DOUBLE},
+      teacherName = #{record.teachername,jdbcType=VARCHAR},
       teacherImg = #{record.teacherimg,jdbcType=VARCHAR},
-      teacherName = #{record.teachername,jdbcType=VARCHAR}
+      teacherId = #{record.teacherid,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  
-     <select id="selectDefaultListByGradeId" parameterType="Integer" resultType="com.pythe.pojo.VHomepageListWithBLOBs"> 
-			(SELECT * FROM v_homepage_list WHERE  gradeId =#{gradeId}) 
-			UNION
-			(SELECT * FROM v_homepage_list)
-	</select>
-  
-  
-  	<select id="selectListByGradeIdAndSubject" resultMap="ResultMapWithBLOBs">	
-						(SELECT * FROM v_homepage_list WHERE  gradeId =#{gradeId} AND subjectId=#{subjectId})
-							UNION
-						(SELECT * FROM v_homepage_list where subjectId=#{subjectId})
-	</select>
-	
-	
-	<select id="selectListByFeeAndLikesNum" parameterType="Integer" resultType="com.pythe.pojo.VHomepageListWithBLOBs"> 
-			(SELECT * FROM v_homepage_list WHERE  gradeId =#{gradeId} ORDER BY likesNum DESC) 
-			UNION
-			(SELECT * FROM v_homepage_list ORDER BY likesNum DESC)
-	</select>
-  
-  
-  	<select id="selectKnowledgeOrQuestionContent" parameterType="String" resultType="com.pythe.pojo.VHomepageListWithBLOBs"> 
-		SELECT * FROM v_homepage_list WHERE  questionContent like CONCAT('%',#{query},'%')
-	</select>
 </mapper>

@@ -38,15 +38,15 @@ public class PaymentOrderJob extends QuartzJobBean {
                 .get("applicationContext");
         //时间参数，当前时间向前推2天
         TblBillMapper billMapper = applicationContext.getBean(TblBillMapper.class);
+        TblQuestionMapper questionMapper = applicationContext.getBean(TblQuestionMapper.class);
         Long questionid = null;
 		String json = null;
 		Date date =null;
-        List<TblQuestion> questionList = applicationContext.getBean(TblQuestionMapper.class).selectQuestionStatusEqualsOne();
+        List<TblQuestion> questionList = questionMapper.selectQuestionStatusEqualsOne();
         if (!questionList.isEmpty()) {
             for (TblQuestion question : questionList) {
             	date =  new DateTime().minusDays(1).toDate();
             	if (date.after(question.getStarttime())) {
-            		
          			questionid = question.getQuestionid();
         	        TblBillExample example = new TblBillExample();
         	        example.createCriteria().andOperationtypeEqualTo("ask question").andObjectidEqualTo(questionid);
@@ -57,6 +57,11 @@ public class PaymentOrderJob extends QuartzJobBean {
         	        object.put("refund_fee",bill.getMoney());
         	        json = JsonUtils.objectToJson(object);
         	        HttpClientUtil.doPostJson("https://xue.pythe.cn/pythe-haowen-rest/rest/user/pay/refund", json);
+        	        //question的状态更新为2超时未答
+        	        question.setStatus(2);
+        	        question.setEndtime(new Date());
+        	        questionMapper.updateByPrimaryKeyWithBLOBs(question);
+        	        
 				}
    
     		}
