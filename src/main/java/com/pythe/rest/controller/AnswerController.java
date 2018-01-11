@@ -73,8 +73,6 @@ public class AnswerController {
     	}
     }
     
-    
-
 //    /**
 //     * 答的列表
 //     * 过来掉超时并且没有打完的
